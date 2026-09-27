@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriQueue - Smart Procurement Queue Management</title>
+    <title>AgriQueue - AI Onion Quality Assessment & Smart Procurement Queue Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -96,12 +96,12 @@
                                         <small data-i18n="online_tokens">Online Tokens</small>
                                         <small id="homeOnlinePercent">60%</small>
                                     </div>
-                                    <div class="progress"><div class="progress-bar" style="width: 60%"></div></div>
+                                    <div class="progress"><div class="progress-bar" id="homeOnlineBar" style="width: 60%"></div></div>
                                     <div class="d-flex justify-content-between mb-1 mt-2">
                                         <small data-i18n="kiosk_tokens">Kiosk Tokens</small>
                                         <small id="homeKioskPercent">40%</small>
                                     </div>
-                                    <div class="progress"><div class="progress-bar bg-info" style="width: 40%"></div></div>
+                                    <div class="progress"><div class="progress-bar bg-info" id="homeKioskBar" style="width: 40%"></div></div>
                                 </div>
                             </div>
                         </div>
@@ -263,10 +263,13 @@
                             <div class="process-step completed" id="qualityStep">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1" data-i18n="quality_check">Quality Check</h6>
-                                        <p class="mb-0 text-muted small" id="qualityDetails">Completed: Moisture 12%, Impurities 0.5%</p>
+                                        <h6 class="mb-1" id="qualityStepTitle" data-i18n="quality_check">AI Quality Assessment</h6>
+                                        <p class="mb-1 text-muted small" id="qualityDetails">Pending: AI quality inspection and human verification</p>
+                                        <button type="button" class="btn btn-sm btn-outline-success py-0 px-2 mt-1" id="farmerViewReportBtn" style="display:none;" onclick="viewDigitalReportForToken(currentToken)">
+                                            <i class="bi bi-file-earmark-medical me-1"></i>Digital Quality Report
+                                        </button>
                                     </div>
-                                    <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                                    <i class="bi bi-check-circle-fill text-success fs-4" id="qualityStepIcon"></i>
                                 </div>
                             </div>
                             <div class="process-step completed" id="weightStep">
@@ -328,8 +331,67 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" data-i18n="aadhaar">Aadhaar Number</label>
-                                        <input type="text" class="form-control" id="farmerAadhaar" required>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="farmerAadhaar" placeholder="12-digit Aadhaar number" maxlength="12" required>
+                                            <button class="btn btn-outline-success" type="button" id="btnSendAadhaarOtp">
+                                                <i class="bi bi-shield-check me-1"></i><span data-i18n="btn_verify_aadhaar">Verify Aadhaar</span>
+                                            </button>
+                                        </div>
+                                        <div id="aadhaarVerifiedBadge" class="mt-1" style="display: none;">
+                                            <span class="badge bg-success-subtle text-success border border-success px-2 py-1">
+                                                <i class="bi bi-patch-check-fill me-1"></i><span data-i18n="aadhaar_verified">Aadhaar Verified</span>
+                                            </span>
+                                            <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 ms-2 text-secondary" id="btnChangeAadhaar" style="font-size: 0.8rem;">Change</button>
+                                        </div>
                                     </div>
+
+                                    <!-- Aadhaar OTP Verification Container -->
+                                    <div class="col-12" id="aadhaarOtpContainer" style="display: none;">
+                                        <div class="card border-success shadow-sm" style="background: rgba(22, 163, 74, 0.04); border-radius: 12px;">
+                                            <div class="card-body p-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="bi bi-shield-lock-fill text-success fs-5 me-2"></i>
+                                                        <strong class="text-success" data-i18n="aadhaar_otp_verification">Aadhaar OTP Verification</strong>
+                                                    </div>
+                                                    <div id="otpTimerDisplay" class="badge bg-dark text-white font-monospace">05:00</div>
+                                                </div>
+                                                
+                                                <p class="text-muted small mb-2" id="otpSentNotice">
+                                                    Enter the dynamically generated 6-digit OTP sent to your registered mobile number linked to Aadhaar.
+                                                </p>
+
+                                                <!-- Test Mode Dynamic OTP Banner -->
+                                                <div id="otpSimulatedAlert" class="alert alert-success py-2 px-3 mb-3 small d-flex justify-content-between align-items-center" style="display: none;">
+                                                    <div>
+                                                        <i class="bi bi-phone-vibrate-fill me-1 text-success"></i>
+                                                        <strong data-i18n="test_mode_otp">Dynamic Test OTP:</strong> <span id="simulatedOtpDisplay" class="badge bg-success fs-6 px-2 py-1 ms-1">------</span>
+                                                    </div>
+                                                    <small class="text-muted">(Auto-generated for testing)</small>
+                                                </div>
+
+                                                <div class="row g-2 align-items-center">
+                                                    <div class="col-sm-6 col-md-5">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text bg-white"><i class="bi bi-key-fill text-muted"></i></span>
+                                                            <input type="text" class="form-control" id="aadhaarOtpInput" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-5 d-flex gap-2">
+                                                        <button type="button" class="btn btn-success flex-fill" id="btnVerifyAadhaarOtp">
+                                                            <i class="bi bi-check2-circle me-1"></i><span data-i18n="btn_confirm_otp">Verify OTP</span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-secondary" id="btnResendAadhaarOtp" disabled>
+                                                            <i class="bi bi-arrow-clockwise me-1"></i><span data-i18n="btn_resend_otp">Resend</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div id="otpFeedback" class="mt-2 small" style="display: none;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label" data-i18n="bank_acc">Bank Account Number</label>
                                         <input type="text" class="form-control" id="farmerBank" required>
@@ -347,6 +409,7 @@
                                         <label class="form-label" data-i18n="crop_type">Crop Type</label>
                                         <select class="form-select" id="cropType" required>
                                             <option value="">Select Crop</option>
+                                            <option value="onion">Onion</option>
                                             <option value="paddy">Paddy</option>
                                             <option value="wheat">Wheat</option>
                                             <option value="rice">Rice</option>
@@ -359,6 +422,9 @@
                                     <div class="col-md-6">
                                         <label class="form-label" data-i18n="pref_date">Preferred Date</label>
                                         <input type="date" class="form-control" id="preferredDate" required>
+                                        <small class="text-muted d-block mt-1" style="font-size: 0.78rem;">
+                                            <i class="bi bi-info-circle me-1"></i><span data-i18n="pref_date_hint">Earliest selectable date is 2 days from today (today and tomorrow are disabled).</span>
+                                        </small>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" data-i18n="pref_slot">Preferred Time Slot</label>
@@ -749,6 +815,7 @@
                         <label class="form-label">Crop Type</label>
                         <select class="form-select form-select-lg" id="kioskCropType">
                             <option value="">Select Crop</option>
+                            <option value="onion">Onion</option>
                             <option value="paddy">Paddy</option>
                             <option value="wheat">Wheat</option>
                             <option value="rice">Rice</option>
@@ -791,7 +858,455 @@
     <!-- Modals -->
     <div class="modal fade" id="qrModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Generate QR Code</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-center"><div class="qr-generator-box" id="qrCodeImage"></div><p class="mt-3 text-muted">Place this QR code at the kiosk or entrance</p></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button><button type="button" class="btn btn-gradient" onclick="printQRCode()"><i class="bi bi-printer me-2"></i>Print</button></div></div></div></div>
 
-    <div class="modal fade" id="qualityModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Quality Check</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="mb-3"><label class="form-label">Moisture Content (%)</label><input type="number" class="form-control" id="moistureContent" step="0.1" required><small class="text-muted">Max: 14%</small></div><div class="mb-3"><label class="form-label">Impurities (%)</label><input type="number" class="form-control" id="impurities" step="0.1" required><small class="text-muted">Max: 1%</small></div><div class="mb-3"><label class="form-label">Foreign Matter (%)</label><input type="number" class="form-control" id="foreignMatter" step="0.1" required><small class="text-muted">Max: 0.5%</small></div><div class="mb-3"><label class="form-label">Quality Status</label><select class="form-select" id="qualityStatus" required><option value="passed">Passed</option><option value="conditionally_passed">Conditionally Passed</option><option value="failed">Failed</option></select></div><div class="mb-3"><label class="form-label">Remarks</label><textarea class="form-control" id="qualityRemarks" rows="2"></textarea></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-gradient" onclick="saveQualityCheck()"><i class="bi bi-check-circle me-2"></i>Save</button></div></div></div></div>
+    <!-- AI Onion Quality Assessment & Traditional Quality Modal -->
+    <div class="modal fade" id="qualityModal" tabindex="-1" aria-labelledby="qualityModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-dark text-white px-4 py-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-camera-fill text-success fs-3"></i>
+                        <div>
+                            <h5 class="modal-title fw-bold mb-0" id="qualityModalLabel">AI ONION QUALITY ASSESSMENT</h5>
+                            <small class="text-white-50">Smart Procurement Computer Vision & Verification Module</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 ms-auto">
+                        <span class="ai-mode-badge demo" id="aiQualityModeBadge">
+                            <i class="bi bi-cpu-fill"></i> DEMO AI MODE
+                        </span>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="stopAICamera()"></button>
+                    </div>
+                </div>
+
+                <div class="modal-body p-4">
+                    <!-- Lot & Token Metadata Strip -->
+                    <div class="ai-info-strip">
+                        <div class="row g-2">
+                            <div class="col-6 col-md-2 info-item">
+                                <span class="info-item-label">Farmer Name</span>
+                                <span class="info-item-val" id="aiModalFarmerName">-</span>
+                            </div>
+                            <div class="col-6 col-md-2 info-item">
+                                <span class="info-item-label">Token Number</span>
+                                <span class="info-item-val text-primary" id="aiModalTokenNumber">-</span>
+                            </div>
+                            <div class="col-6 col-md-2 info-item">
+                                <span class="info-item-label">Lot / Token ID</span>
+                                <span class="info-item-val" id="aiModalLotId">-</span>
+                            </div>
+                            <div class="col-6 col-md-2 info-item">
+                                <span class="info-item-label">Crop</span>
+                                <span class="info-item-val text-success" id="aiModalCrop">Onion</span>
+                            </div>
+                            <div class="col-6 col-md-2 info-item">
+                                <span class="info-item-label">Total Lot Weight</span>
+                                <span class="info-item-val" id="aiModalTotalLotWeight">-</span>
+                            </div>
+                            <div class="col-6 col-md-2 info-item">
+                                <span class="info-item-label">Sample Weight</span>
+                                <span class="info-item-val text-warning" id="aiModalSampleWeightDisplay">2.0 kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================= SECTION A: AI ONION QUALITY ASSESSMENT ================= -->
+                    <div class="mb-4">
+                        <div class="section-header-banner">
+                            <span><i class="bi bi-robot me-2 text-primary"></i>SECTION A: AI ONION QUALITY ASSESSMENT</span>
+                            <small class="badge bg-primary-subtle text-primary">Computer Vision Sample Analysis</small>
+                        </div>
+
+                        <!-- Step 1: Onion Sample Setup -->
+                        <div class="card border-0 bg-light p-3 rounded-3 mb-3">
+                            <div class="d-flex align-items-start gap-2 mb-2">
+                                <span class="badge bg-dark rounded-pill px-2 py-1">STEP 1</span>
+                                <strong class="text-dark">Onion Sample Preparation</strong>
+                            </div>
+                            <div class="alert alert-info py-2 px-3 small mb-3 border-0 bg-white shadow-sm">
+                                <i class="bi bi-info-circle-fill text-info me-2"></i>
+                                Take the applicable representative sample according to the procurement procedure and place the onions in a clearly visible single layer for image capture.
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-sm-5 col-md-4">
+                                    <label class="form-label small fw-bold mb-1">Sample Weight (kg) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="aiSampleWeightInput" value="2.0" step="0.1" min="0.1" required>
+                                        <span class="input-group-text">kg</span>
+                                    </div>
+                                    <small class="text-muted" style="font-size: 0.72rem;">Total lot weight is recorded separately.</small>
+                                </div>
+                                <div class="col-sm-7 col-md-8 d-flex flex-wrap gap-2 pt-3 pt-sm-0">
+                                    <button type="button" class="btn btn-success" id="btnStartCamera" onclick="startAICamera()">
+                                        <i class="bi bi-camera-video-fill me-1"></i> Start Camera
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="triggerImageUpload()">
+                                        <i class="bi bi-cloud-arrow-up me-1"></i> Upload Image Instead
+                                    </button>
+                                    <input type="file" id="aiImageFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="handleImageFileSelected(event)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Camera Viewport & Capture -->
+                        <div id="cameraSection" style="display:none;" class="mb-3">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="badge bg-dark rounded-pill px-2 py-1">STEP 2</span>
+                                <strong class="text-dark">Camera Preview & Image Capture</strong>
+                            </div>
+
+                            <div class="camera-viewport" id="cameraViewport">
+                                <video id="aiCameraVideo" autoplay playsinline muted></video>
+                                <canvas id="aiCameraCaptureCanvas" style="display:none;"></canvas>
+                                <img id="aiCapturedPhotoPreview" class="preview-img" style="display:none;" alt="Captured Onion Sample">
+                                <div class="camera-overlay-box" id="cameraOverlayBox">
+                                    <div class="camera-overlay-text">
+                                        <i class="bi bi-fullscreen me-1"></i> PLACE ONIONS INSIDE THIS INSPECTION AREA
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Camera controls -->
+                            <div class="text-center mb-3">
+                                <div id="liveCameraControls" class="d-flex justify-content-center gap-3">
+                                    <button type="button" class="btn btn-success btn-lg px-4" id="btnCapturePhoto" onclick="capturePhoto()">
+                                        <i class="bi bi-camera me-1"></i> Capture Image
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="switchCamera()">
+                                        <i class="bi bi-arrow-repeat me-1"></i> Switch Camera
+                                    </button>
+                                </div>
+                                <div id="capturedPhotoControls" style="display:none;" class="d-flex justify-content-center gap-3">
+                                    <button type="button" class="btn btn-outline-secondary btn-lg" onclick="retakePhoto()">
+                                        <i class="bi bi-arrow-counterclockwise me-1"></i> Retake
+                                    </button>
+                                    <button type="button" class="btn btn-gradient btn-lg px-4" id="btnConfirmAndAnalyze" onclick="confirmAndAnalyzeImage()">
+                                        <i class="bi bi-magic me-1"></i> Use This Image & Analyze
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Image Validation Warning Alert -->
+                            <div id="imageValidationAlert" class="alert alert-warning py-2 px-3 small text-center" style="display:none;"></div>
+                            
+                            <!-- Camera Permission Alert -->
+                            <div id="cameraErrorAlert" class="alert alert-danger py-2 px-3 small text-center" style="display:none;">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                Camera access is required for AI quality inspection. Please allow camera permissions or upload an image file instead.
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-sm btn-outline-danger me-2" onclick="startAICamera()">Retry Camera</button>
+                                    <button type="button" class="btn btn-sm btn-dark" onclick="triggerImageUpload()">Upload Image</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 & 4: AI Processing Box -->
+                        <div id="aiProcessingBox" class="ai-processing-box" style="display:none;">
+                            <div class="spinner-border text-primary mb-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <h5 class="fw-bold mb-1">AI QUALITY ANALYSIS</h5>
+                            <p class="text-muted small mb-2">Analyzing onion sample visual parameters and detecting defects...</p>
+                            <div class="ai-scanner-line"></div>
+                            <div class="processing-checklist">
+                                <div class="processing-checklist-item done" id="checkItemImage"><i class="bi bi-check-circle-fill"></i> Image captured</div>
+                                <div class="processing-checklist-item done" id="checkItemQuality"><i class="bi bi-check-circle-fill"></i> Image quality checked</div>
+                                <div class="processing-checklist-item active" id="checkItemDetect"><i class="bi bi-hourglass-split"></i> Detecting onions...</div>
+                                <div class="processing-checklist-item active" id="checkItemDefects"><i class="bi bi-hourglass-split"></i> Identifying visible defects...</div>
+                                <div class="processing-checklist-item active" id="checkItemSize"><i class="bi bi-hourglass-split"></i> Analyzing size...</div>
+                                <div class="processing-checklist-item active" id="checkItemGrade"><i class="bi bi-hourglass-split"></i> Calculating quality...</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 & 6: AI Detection Result & Quality Summary -->
+                        <div id="aiResultsSection" style="display:none;">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-dark rounded-pill px-2 py-1">STEP 3</span>
+                                    <strong class="text-dark">AI Detection Results & Defect Classification</strong>
+                                </div>
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <span class="badge" style="background:#10b981;">GOOD</span>
+                                    <span class="badge" style="background:#f59e0b;">DAMAGED</span>
+                                    <span class="badge" style="background:#ef4444;">ROTTEN</span>
+                                    <span class="badge" style="background:#8b5cf6;">SPROUTED</span>
+                                    <span class="badge" style="background:#0ea5e9;">UNDERSIZED</span>
+                                </div>
+                            </div>
+
+                            <!-- Detection Canvas Box -->
+                            <div class="detection-container mb-3" id="detectionViewerBox">
+                                <img id="aiResultImage" alt="AI Analyzed Sample">
+                                <canvas id="aiDetectionCanvas"></canvas>
+                            </div>
+
+                            <!-- Defect Cards Grid -->
+                            <div class="defect-cards-grid">
+                                <div class="defect-card good">
+                                    <div class="defect-card-label">Good</div>
+                                    <div class="defect-card-count text-success" id="cardGoodCount">0</div>
+                                    <div class="defect-card-percent" id="cardGoodPercent">0%</div>
+                                </div>
+                                <div class="defect-card damaged">
+                                    <div class="defect-card-label">Damaged</div>
+                                    <div class="defect-card-count text-warning" id="cardDamagedCount">0</div>
+                                    <div class="defect-card-percent" id="cardDamagedPercent">0%</div>
+                                </div>
+                                <div class="defect-card rotten">
+                                    <div class="defect-card-label">Rotten</div>
+                                    <div class="defect-card-count text-danger" id="cardRottenCount">0</div>
+                                    <div class="defect-card-percent" id="cardRottenPercent">0%</div>
+                                </div>
+                                <div class="defect-card sprouted">
+                                    <div class="defect-card-label">Sprouted</div>
+                                    <div class="defect-card-count" style="color:#8b5cf6;" id="cardSproutedCount">0</div>
+                                    <div class="defect-card-percent" id="cardSproutedPercent">0%</div>
+                                </div>
+                                <div class="defect-card undersized">
+                                    <div class="defect-card-label">Undersized</div>
+                                    <div class="defect-card-count text-info" id="cardUndersizedCount">0</div>
+                                    <div class="defect-card-percent" id="cardUndersizedPercent">0%</div>
+                                </div>
+                            </div>
+
+                            <!-- AI Quality Summary Card -->
+                            <div class="summary-banner">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 text-center text-md-start mb-2 mb-md-0">
+                                        <small class="text-uppercase text-muted fw-bold">AI Quality Summary</small>
+                                        <h6 class="mb-0 fw-bold">Total Analyzed: <span id="summaryTotalAnalyzed" class="text-dark">0</span> Onions</h6>
+                                        <small class="text-muted d-block" id="summaryModelLabel">Model: onion-yolo-v8</small>
+                                    </div>
+                                    <div class="col-6 col-md-4 text-center">
+                                        <small class="text-muted fw-bold d-block">GRADE A</small>
+                                        <span class="grade-a-badge-large" id="summaryGradeAPercent">0%</span>
+                                    </div>
+                                    <div class="col-6 col-md-4 text-center">
+                                        <small class="text-muted fw-bold d-block">URS (REJECT STANDARD)</small>
+                                        <span class="urs-badge-large" id="summaryUrsPercent">0%</span>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-2 pt-2 border-top border-success-subtle">
+                                    <small class="text-muted fst-italic">
+                                        <i class="bi bi-shield-check me-1"></i>Grade A / URS calculated using configured grading rules.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Step 7 & 8: Human Verification Table -->
+                            <div class="card border-0 shadow-sm p-3 rounded-3 mb-2">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-dark rounded-pill px-2 py-1">STEP 4</span>
+                                        <strong class="text-dark">HUMAN VERIFICATION & AUDIT REVIEW</strong>
+                                    </div>
+                                    <span class="small text-muted" id="verificationReviewBadge">Review and adjust individual onion classifications below.</span>
+                                </div>
+                                <div class="verification-table">
+                                    <table class="table table-sm table-hover align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>AI Prediction</th>
+                                                <th>Confidence</th>
+                                                <th>Audit / Review</th>
+                                                <th>Final Human Result</th>
+                                                <th>Remarks / Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="humanVerificationTableBody">
+                                            <!-- Dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <small class="text-muted fst-italic" style="font-size: 0.76rem;">
+                                    Original AI predictions are preserved for auditability and transparency. Corrected predictions record staff ID and timestamp.
+                                </small>
+                            </div>
+
+                            <!-- Instant Report Trigger: generate the digital report right after AI + human verification, before final confirm -->
+                            <div class="d-flex justify-content-end align-items-center gap-2 mt-2 mb-1">
+                                <small class="text-muted fst-italic me-auto">Preview the digital report now — no need to wait for final confirmation.</small>
+                                <button type="button" class="btn btn-outline-dark btn-sm" onclick="generateInstantReport()">
+                                    <i class="bi bi-lightning-charge-fill me-1"></i> Generate Instant Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================= SECTION B: TRADITIONAL QUALITY PARAMETERS ================= -->
+                    <div class="mt-4 pt-2 border-top">
+                        <div class="section-header-banner">
+                            <span><i class="bi bi-moisture me-2 text-success"></i>SECTION B: TRADITIONAL QUALITY PARAMETERS</span>
+                            <small class="badge bg-secondary-subtle text-secondary">Physical Moisture & Foreign Matter</small>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Moisture Content (%) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="moistureContent" step="0.1" value="11.5" required>
+                                <small class="text-muted">Standard Max: 14%</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Impurities (%) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="impurities" step="0.1" value="0.4" required>
+                                <small class="text-muted">Standard Max: 1%</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Foreign Matter (%) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="foreignMatter" step="0.1" value="0.2" required>
+                                <small class="text-muted">Standard Max: 0.5%</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Overall Quality Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="qualityStatus" required>
+                                    <option value="passed">Passed (Grade A Meets Tolerance)</option>
+                                    <option value="conditionally_passed">Conditionally Passed (Marginal Defect Tolerance)</option>
+                                    <option value="failed">Failed (Exceeds Defect Threshold)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Staff Quality Remarks</label>
+                                <textarea class="form-control" id="qualityRemarks" rows="2" placeholder="Visual inspection notes, lot appearance, smell, bulb firmness..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-light px-4 py-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="stopAICamera()">Cancel</button>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-primary" id="btnOpenDigitalReport" style="display:none;" onclick="openDigitalReportModal()">
+                            <i class="bi bi-file-earmark-medical me-1"></i> Digital Quality Report
+                        </button>
+                        <button type="button" class="btn btn-gradient px-4" id="btnConfirmQuality" onclick="saveAIAndTraditionalQuality()">
+                            <i class="bi bi-check-circle-fill me-1"></i> Confirm & Save Quality
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Digital Quality Report Modal -->
+    <div class="modal fade" id="qualityReportModal" tabindex="-1" aria-labelledby="qualityReportModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-dark text-white px-4 py-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-award-fill text-warning fs-4"></i>
+                        <h5 class="modal-title fw-bold mb-0" id="qualityReportModalLabel">ONION QUALITY ASSESSMENT REPORT</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="qualityReportPrintArea">
+                    <div class="report-sheet">
+                        <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-3">
+                            <div>
+                                <h4 class="fw-bold mb-0 text-success"><i class="bi bi-qr-code-scan me-2"></i>AgriQueue</h4>
+                                <small class="text-muted">Smart Farmer Procurement & Hybrid Queue Management System</small>
+                                <h5 class="fw-bold mt-2 text-dark">ONION QUALITY ASSESSMENT REPORT</h5>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-success-subtle text-success fs-6 border border-success px-3 py-1" id="repOverallStatus">PASSED</span>
+                                <div class="small text-muted mt-1" id="repDateDisplay">Date: --/--/----</div>
+                                <div class="small text-muted" id="repReportIdDisplay">Report ID: -</div>
+                            </div>
+                        </div>
+
+                        <!-- Report Section: Procurement & Farmer Details -->
+                        <div class="report-section-title">Procurement & Farmer Details</div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Token Number</small><strong id="repTokenNumber">-</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Farmer Name</small><strong id="repFarmerName">-</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Farmer / Lot ID</small><strong id="repFarmerId">-</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Centre</small><strong id="repCentre">-</strong></div>
+                        </div>
+
+                        <!-- Report Section: Lot & Sample Details -->
+                        <div class="report-section-title">Lot & Representative Sample</div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Crop Type</small><strong>Onion (Allium cepa)</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Total Lot Weight</small><strong id="repTotalLotWeight">- kg</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Sample Weight</small><strong id="repSampleWeight">- kg</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Onions Analyzed</small><strong id="repOnionsAnalyzed">-</strong></div>
+                        </div>
+
+                        <!-- Report Section: AI Visual Assessment -->
+                        <div class="report-section-title">AI Computer Vision Quality Assessment</div>
+                        <div class="table-responsive mb-3">
+                            <table class="table table-bordered table-sm text-center mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>GRADE A %</th>
+                                        <th>URS (Reject) %</th>
+                                        <th>Good</th>
+                                        <th>Damaged</th>
+                                        <th>Rotten</th>
+                                        <th>Sprouted</th>
+                                        <th>Undersized</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="fw-bold">
+                                        <td class="text-success fs-6" id="repGradeA">0%</td>
+                                        <td class="text-warning fs-6" id="repUrs">0%</td>
+                                        <td id="repGood">0</td>
+                                        <td id="repDamaged">0</td>
+                                        <td id="repRotten">0</td>
+                                        <td id="repSprouted">0</td>
+                                        <td id="repUndersized">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Report Section: Traditional Parameters -->
+                        <div class="report-section-title">Traditional Quality Parameters</div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-4"><small class="text-muted d-block">Moisture Content</small><strong id="repMoisture">-%</strong></div>
+                            <div class="col-4"><small class="text-muted d-block">Impurities</small><strong id="repImpurities">-%</strong></div>
+                            <div class="col-4"><small class="text-muted d-block">Foreign Matter</small><strong id="repForeignMatter">-%</strong></div>
+                        </div>
+
+                        <!-- Report Section: Annotated Image -->
+                        <div class="report-section-title">Annotated Sample Inspection Image</div>
+                        <div class="text-center my-2 p-2 bg-light rounded-3">
+                            <img id="repAnnotatedImage" style="max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 8px;" alt="Annotated Onion Sample">
+                        </div>
+
+                        <!-- Report Section: Audit & Verification -->
+                        <div class="report-section-title">Verification & Audit Trail</div>
+                        <div class="row g-2 mb-2">
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">AI Model Version</small><span id="repModelVersion" class="badge bg-secondary">-</span></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">AI Analysis</small><span class="badge bg-success">Completed</span></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Verified By</small><strong id="repVerifiedBy">-</strong></div>
+                            <div class="col-6 col-sm-3"><small class="text-muted d-block">Verified At</small><span id="repVerifiedAt" class="small">-</span></div>
+                        </div>
+                        <div class="mb-2">
+                            <small class="text-muted d-block">Staff Remarks:</small>
+                            <span id="repRemarks" class="fst-italic">-</span>
+                        </div>
+
+                        <!-- Mandatory Disclaimer -->
+                        <div class="report-notice-box">
+                            <i class="bi bi-shield-exclamation me-1"></i>
+                            <strong>Official Compliance Notice:</strong> AI assessment is based on the analyzed sample and configured grading rules. The system does not claim to inspect onions outside the representative physical sample photographed.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light px-4 py-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-primary" onclick="downloadReportJSON()">
+                            <i class="bi bi-download me-1"></i> Download JSON
+                        </button>
+                        <button type="button" class="btn btn-gradient" onclick="printReport()">
+                            <i class="bi bi-printer-fill me-1"></i> Print / Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="weightModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Weight Measurement</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="mb-3"><label class="form-label">Gross Weight (kg)</label><input type="number" class="form-control" id="grossWeight" step="0.01" required></div><div class="mb-3"><label class="form-label">Tare Weight (kg)</label><input type="number" class="form-control" id="tareWeight" step="0.01" required></div><div class="mb-3"><label class="form-label">Net Weight (kg)</label><input type="number" class="form-control" id="netWeight" step="0.01" readonly></div><div class="mb-3"><label class="form-label">Moisture Deduction (%)</label><input type="number" class="form-control" id="moistureDeduction" step="0.1" value="0"></div><div class="mb-3"><label class="form-label">Final Weight (kg)</label><input type="number" class="form-control" id="finalWeight" step="0.01" readonly></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-gradient" onclick="saveWeightMeasurement()"><i class="bi bi-check-circle me-2"></i>Save</button></div></div></div></div>
 
@@ -812,6 +1327,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

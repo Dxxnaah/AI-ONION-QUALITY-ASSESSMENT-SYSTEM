@@ -1,13 +1,74 @@
 const mongoose = require('mongoose');
 
+const detectionSchema = new mongoose.Schema(
+  {
+    id: Number,
+    class: { type: String, enum: ['GOOD', 'DAMAGED', 'ROTTEN', 'SPROUTED', 'UNDERSIZED'] },
+    confidence: Number,
+    bbox: {
+      x: Number,
+      y: Number,
+      width: Number,
+      height: Number
+    },
+    notes: String,
+    needsReview: { type: Boolean, default: false },
+    humanVerified: { type: Boolean, default: false },
+    humanVerifiedClass: { type: String, enum: ['GOOD', 'DAMAGED', 'ROTTEN', 'SPROUTED', 'UNDERSIZED', null], default: null }
+  },
+  { _id: false }
+);
+
+const aiAssessmentSchema = new mongoose.Schema(
+  {
+    enabled: { type: Boolean, default: false },
+    mode: { type: String, enum: ['demo', 'real'], default: 'demo' },
+    status: { type: String, enum: ['pending', 'analyzed', 'verified'], default: 'pending' },
+    imageUrl: String,
+    annotatedImageUrl: String,
+    totalDetected: { type: Number, default: 0 },
+    counts: {
+      good: { type: Number, default: 0 },
+      damaged: { type: Number, default: 0 },
+      rotten: { type: Number, default: 0 },
+      sprouted: { type: Number, default: 0 },
+      undersized: { type: Number, default: 0 }
+    },
+    percentages: {
+      gradeA: { type: Number, default: 0 },
+      urs: { type: Number, default: 0 },
+      good: { type: Number, default: 0 },
+      damaged: { type: Number, default: 0 },
+      rotten: { type: Number, default: 0 },
+      sprouted: { type: Number, default: 0 },
+      undersized: { type: Number, default: 0 }
+    },
+    detections: [detectionSchema],
+    modelVersion: String,
+    gradingRuleVersion: String,
+    analyzedAt: Date,
+    verifiedAt: Date,
+    verifiedBy: String,
+    reportId: String
+  },
+  { _id: false }
+);
+
 const qualityCheckSchema = new mongoose.Schema(
   {
+    // Traditional quality parameters (Preserved)
     moisture: Number,
     impurities: Number,
     foreignMatter: Number,
     status: { type: String, enum: ['passed', 'conditionally_passed', 'failed'] },
     remarks: String,
-    checkedAt: Date
+    checkedAt: Date,
+
+    // Sample details
+    sampleWeight: Number,
+
+    // AI Onion Quality Assessment
+    aiAssessment: { type: aiAssessmentSchema, default: null }
   },
   { _id: false }
 );

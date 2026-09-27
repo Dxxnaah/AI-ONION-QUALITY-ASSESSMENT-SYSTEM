@@ -17,6 +17,7 @@ const procurementRoutes = require('./routes/procurementRoutes');
 const kioskRoutes = require('./routes/kioskRoutes');
 const displayRoutes = require('./routes/displayRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const otpRoutes = require('./routes/otpRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -36,6 +37,7 @@ app.use(express.json());
 
 // Serve the frontend (built from the AgriQueue HTML/CSS/JS) as static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/api/health', (req, res) => res.json({ ok: true, service: 'agriqueue-backend' }));
 
@@ -47,6 +49,7 @@ app.use('/api/procurement', procurementRoutes);
 app.use('/api/kiosk', kioskRoutes);
 app.use('/api/display', displayRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/otp', otpRoutes);
 
 // Any non-API route falls back to the frontend (so browser refreshes on client routes still work)
 app.get(/^(?!\/api).*/, (req, res) => {

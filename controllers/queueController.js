@@ -25,11 +25,29 @@ async function estimateWaitMinutes(centreId, aheadCount) {
   return Math.ceil((aheadCount * AVG_PROCESS_MIN) / activeCounters);
 }
 
+const { isAadhaarVerified } = require('../services/otpService');
+
+function getEarliestAllowedDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 2);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 // GET /api/queue/slot-info?centreId=&date=&slot=
 async function getSlotInfo(req, res) {
   const { centreId, date, slot } = req.query;
   if (!centreId || !date || !slot || !SLOT_CONFIG[slot]) {
     return res.status(400).json({ error: 'centreId, date and a valid slot are required' });
+  }
+
+  const earliestDate = getEarliestAllowedDate();
+  if (date < earliestDate) {
+    return res.status(400).json({
+      error: `Preferred date must be at least 2 days from today. Earliest selectable date is ${earliestDate}. Today and tomorrow are not selectable.`
+    });
   }
 
   const tokensInSlot = await QueueToken.countDocuments({
@@ -54,11 +72,11 @@ async function getSlotInfo(req, res) {
 }
 
 // POST /api/queue/join
-// Body: { farmerName, farmerId, mobile, aadhaar, bankAccount, centreId, cropType, quantity, date, slot, type }
+// Body: { farmerName, farmerId, mobile, aadhaar, bankAccount, centreId, cropType, quantity, date, slot, type, verificationToken }
 async function joinQueue(req, res) {
   const {
     farmerName, farmerId, mobile, aadhaar, bankAccount,
-    centreId, cropType, quantity, date, slot, type
+    centreId, cropType, quantity, date, slot, type, verificationToken
   } = req.body;
 
   if (!farmerName || !centreId || !cropType || !quantity || !date || !slot) {
@@ -66,10 +84,27 @@ async function joinQueue(req, res) {
   }
   if (!SLOT_CONFIG[slot]) return res.status(400).json({ error: 'Invalid slot' });
 
+  const tokenType = type === 'kiosk' ? 'kiosk' : 'online';
+
+  // Server-side validation: Preferred date must be at least 2 days from today
+  if (tokenType === 'online') {
+    const earliestDate = getEarliestAllowedDate();
+    if (date < earliestDate) {
+      return res.status(400).json({
+        error: `Preferred date must be at least 2 days from today. Earliest selectable date is ${earliestDate}. Today and tomorrow are not selectable.`
+      });
+    }
+
+    if (aadhaar && verificationToken) {
+      if (!isAadhaarVerified(aadhaar, verificationToken)) {
+        return res.status(400).json({ error: 'Aadhaar OTP verification is invalid or expired. Please verify Aadhaar via OTP.' });
+      }
+    }
+  }
+
   const centre = await Centre.findById(centreId);
   if (!centre) return res.status(404).json({ error: 'Centre not found' });
 
-  const tokenType = type === 'kiosk' ? 'kiosk' : 'online';
   const tokenStr = await generateNextToken(centreId, date, tokenType);
 
   const doc = await QueueToken.create({
