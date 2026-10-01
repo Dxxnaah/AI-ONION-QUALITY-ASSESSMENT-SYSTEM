@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 const QueueToken = require('../models/QueueToken');
 const Centre = require('../models/Centre');
+const V = require('../public/js/validation'); // same rules the farmer form uses
 const { generateNextToken } = require('../utils/generateToken');
 const { broadcast } = require('../utils/socket');
 
@@ -25,29 +27,11 @@ async function estimateWaitMinutes(centreId, aheadCount) {
   return Math.ceil((aheadCount * AVG_PROCESS_MIN) / activeCounters);
 }
 
-const { isAadhaarVerified } = require('../services/otpService');
-
-function getEarliestAllowedDate() {
-  const d = new Date();
-  d.setDate(d.getDate() + 2);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-
 // GET /api/queue/slot-info?centreId=&date=&slot=
 async function getSlotInfo(req, res) {
   const { centreId, date, slot } = req.query;
   if (!centreId || !date || !slot || !SLOT_CONFIG[slot]) {
     return res.status(400).json({ error: 'centreId, date and a valid slot are required' });
-  }
-
-  const earliestDate = getEarliestAllowedDate();
-  if (date < earliestDate) {
-    return res.status(400).json({
-      error: `Preferred date must be at least 2 days from today. Earliest selectable date is ${earliestDate}. Today and tomorrow are not selectable.`
-    });
   }
 
   const tokensInSlot = await QueueToken.countDocuments({
@@ -72,39 +56,61 @@ async function getSlotInfo(req, res) {
 }
 
 // POST /api/queue/join
-// Body: { farmerName, farmerId, mobile, aadhaar, bankAccount, centreId, cropType, quantity, date, slot, type, verificationToken }
+// Body: { farmerName, farmerId, mobile, aadhaar, bankAccount, centreId, cropType, quantity, date, slot, type }
 async function joinQueue(req, res) {
-  const {
-    farmerName, farmerId, mobile, aadhaar, bankAccount,
-    centreId, cropType, quantity, date, slot, type, verificationToken
-  } = req.body;
-
-  if (!farmerName || !centreId || !cropType || !quantity || !date || !slot) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  // Validate every field with the shared rules. Never trust the browser: someone
+  // can call this API directly and skip the form entirely.
+  const result = V.booking({
+    farmerName: req.body.farmerName,
+    mobile: req.body.mobile,
+    aadhaar: req.body.aadhaar,
+    bankAccount: req.body.bankAccount,
+    centreId: req.body.centreId,
+    cropType: req.body.cropType,
+    quantity: req.body.quantity,
+    date: req.body.date,
+    slot: req.body.slot
+  });
+  if (!result.ok) {
+    return res.status(400).json({
+      error: 'Please correct the highlighted fields.',
+      fields: result.errors
+    });
   }
-  if (!SLOT_CONFIG[slot]) return res.status(400).json({ error: 'Invalid slot' });
 
-  const tokenType = type === 'kiosk' ? 'kiosk' : 'online';
+  const { farmerName, mobile, aadhaar, bankAccount, centreId, cropType, quantity, date, slot } = result.values;
+  const { farmerId, type } = req.body;
 
-  // Server-side validation: Preferred date must be at least 2 days from today
-  if (tokenType === 'online') {
-    const earliestDate = getEarliestAllowedDate();
-    if (date < earliestDate) {
-      return res.status(400).json({
-        error: `Preferred date must be at least 2 days from today. Earliest selectable date is ${earliestDate}. Today and tomorrow are not selectable.`
-      });
-    }
-
-    if (aadhaar && verificationToken) {
-      if (!isAadhaarVerified(aadhaar, verificationToken)) {
-        return res.status(400).json({ error: 'Aadhaar OTP verification is invalid or expired. Please verify Aadhaar via OTP.' });
-      }
-    }
+  if (!mongoose.isValidObjectId(centreId)) {
+    return res.status(400).json({ error: 'Please correct the highlighted fields.', fields: { centreId: 'Choose a valid procurement centre.' } });
   }
 
   const centre = await Centre.findById(centreId);
-  if (!centre) return res.status(404).json({ error: 'Centre not found' });
+  if (!centre) return res.status(404).json({ error: 'Centre not found', fields: { centreId: 'This centre no longer exists. Pick another.' } });
 
+  // One active booking per farmer per day (matched on Aadhaar).
+  const duplicate = await QueueToken.findOne({
+    aadhaar, date, status: { $in: ['waiting', 'serving'] }
+  });
+  if (duplicate) {
+    return res.status(409).json({
+      error: `This Aadhaar already has an active token (${duplicate.token}) for ${date}.`,
+      fields: { aadhaar: `Already booked for this date: token ${duplicate.token}.` }
+    });
+  }
+
+  // Slot capacity.
+  const booked = await QueueToken.countDocuments({
+    centre: centreId, date, slot, status: { $in: ['waiting', 'serving'] }
+  });
+  if (booked >= SLOT_CONFIG[slot].capacity) {
+    return res.status(409).json({
+      error: `The ${SLOT_CONFIG[slot].label.toLowerCase()} slot on ${date} is full.`,
+      fields: { slot: 'This slot is full. Choose another slot or date.' }
+    });
+  }
+
+  const tokenType = type === 'kiosk' ? 'kiosk' : 'online';
   const tokenStr = await generateNextToken(centreId, date, tokenType);
 
   const doc = await QueueToken.create({
