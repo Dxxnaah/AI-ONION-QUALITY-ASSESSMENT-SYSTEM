@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -302,7 +301,8 @@
                         </div>
                     </div>
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <!-- Book Your Slot (hidden while a token is active, shown again after Leave Queue) -->
+                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden" id="bookingCard">
                         <div class="card-body p-5">
                             <h2 class="text-center mb-4" data-i18n="book_slot">Book Your Slot</h2>
                             <form id="joinQueueForm">
@@ -311,20 +311,20 @@
                                         <label class="form-label" data-i18n="farmer_name">Farmer Name</label>
                                         <input type="text" class="form-control" id="farmerName" required>
                                     </div>
-                                     <!-- Farmer ID -->
-                <div class="col-md-6">
-                    <label class="form-label" data-i18n="farmer_id">
-                        Farmer ID
-                    </label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="farmerId"
-                        name="farmerId"
-                        placeholder="Enter Farmer ID"
-                        required
-                    >
-                </div>
+                                    <!-- Farmer ID -->
+                                    <div class="col-md-6">
+                                        <label class="form-label" data-i18n="farmer_id">
+                                            Farmer ID
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="farmerId"
+                                            name="farmerId"
+                                            placeholder="Enter Farmer ID"
+                                            required
+                                        >
+                                    </div>
                                     <div class="col-md-6">
                                         <label class="form-label" data-i18n="mobile">Mobile Number</label>
                                         <input type="tel" class="form-control" id="farmerMobile" required>
@@ -356,7 +356,7 @@
                                                     </div>
                                                     <div id="otpTimerDisplay" class="badge bg-dark text-white font-monospace">05:00</div>
                                                 </div>
-                                                
+
                                                 <p class="text-muted small mb-2" id="otpSentNotice">
                                                     Enter the dynamically generated 6-digit OTP sent to your registered mobile number linked to Aadhaar.
                                                 </p>
@@ -987,7 +987,7 @@
 
                             <!-- Image Validation Warning Alert -->
                             <div id="imageValidationAlert" class="alert alert-warning py-2 px-3 small text-center" style="display:none;"></div>
-                            
+
                             <!-- Camera Permission Alert -->
                             <div id="cameraErrorAlert" class="alert alert-danger py-2 px-3 small text-center" style="display:none;">
                                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -1329,7 +1329,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/script.js"></script>
-<script src="js/validation.js"></script>
-<script src="js/farmer-validation.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/farmer-validation.js"></script>
 </body>
 </html>

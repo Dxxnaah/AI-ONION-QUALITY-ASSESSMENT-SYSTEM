@@ -40,7 +40,15 @@
                 queue_list: 'Queue List', call_next: 'Call Next', recall: 'Recall', complete: 'Complete',
                 quality: 'Quality', weight: 'Weight', payment: 'Payment',
                 ai_quality_btn: 'AI Quality Check', ai_quality: 'AI Onion Quality Assessment',
-                current: 'Current', farmer_label: 'Farmer', crop_label: 'Crop', none: 'None', active_label: 'Active'
+                current: 'Current', farmer_label: 'Farmer', crop_label: 'Crop', none: 'None', active_label: 'Active',
+                farmer_id: 'Farmer ID', select_slot: 'Select Slot', select_crop: 'Select Crop', select_centre: 'Select Centre',
+                crop_onion: 'Onion', crop_paddy: 'Paddy', crop_wheat: 'Wheat', crop_rice: 'Rice',
+                slot_morning: 'Morning', slot_afternoon: 'Afternoon', slot_evening: 'Evening',
+                slot_capacity_kg: 'Slot Capacity', slot_booked_kg: 'Already Booked', slot_available_kg: 'Available Quantity',
+                kg_left: 'left', unit_kg: 'kg', slot_full_short: 'FULL', avail_in_slot: 'Available in this slot:',
+                slot_full: 'This slot is full. Please choose another slot or date.',
+                qty_exceeds: 'Only {n} is available in this slot. Reduce your quantity or choose another slot/date.',
+                qty_exceeds_title: 'Quantity Not Available'
             },
             ta: {
                 nav_home: 'முகப்பு', nav_farmer: 'விவசாயி போர்ட்டல்', nav_display: 'காட்சி', nav_staff: 'ஊழியர்', nav_admin: 'நிர்வாகம்',
@@ -82,19 +90,82 @@
                 queue_list: 'வரிசை பட்டியல்', call_next: 'அடுத்து அழை', recall: 'மீண்டும் அறிவி', complete: 'முடி',
                 quality: 'தரம்', weight: 'எடை', payment: 'கட்டணம்',
                 ai_quality_btn: 'AI தர சரிபார்ப்பு', ai_quality: 'வெங்காய AI தர மதிப்பீடு',
-                current: 'தற்போதைய', farmer_label: 'விவசாயி', crop_label: 'பயிர்', none: 'எதுவுமில்லை', active_label: 'செயலில்'
+                current: 'தற்போதைய', farmer_label: 'விவசாயி', crop_label: 'பயிர்', none: 'எதுவுமில்லை', active_label: 'செயலில்',
+                farmer_id: 'விவசாயி ஐடி', select_slot: 'ஸ்லாட்டைத் தேர்ந்தெடுக்கவும்', select_crop: 'பயிரைத் தேர்ந்தெடுக்கவும்', select_centre: 'மையத்தைத் தேர்ந்தெடுக்கவும்',
+                crop_onion: 'வெங்காயம்', crop_paddy: 'நெல்', crop_wheat: 'கோதுமை', crop_rice: 'அரிசி',
+                slot_morning: 'காலை', slot_afternoon: 'மதியம்', slot_evening: 'மாலை',
+                slot_capacity_kg: 'ஸ்லாட் கொள்ளளவு', slot_booked_kg: 'ஏற்கனவே முன்பதிவு', slot_available_kg: 'கிடைக்கும் அளவு',
+                kg_left: 'மீதம்', unit_kg: 'கிகி', slot_full_short: 'நிரம்பியது', avail_in_slot: 'இந்த ஸ்லாட்டில் கிடைப்பது:',
+                slot_full: 'இந்த ஸ்லாட் நிரம்பியுள்ளது. வேறு ஸ்லாட் அல்லது தேதியைத் தேர்ந்தெடுக்கவும்.',
+                qty_exceeds: 'இந்த ஸ்லாட்டில் {n} மட்டுமே கிடைக்கிறது. அளவைக் குறைக்கவும் அல்லது வேறு ஸ்லாட்/தேதியைத் தேர்ந்தெடுக்கவும்.',
+                qty_exceeds_title: 'அளவு கிடைக்கவில்லை'
+            },
+            hi: {
+                nav_home: 'होम', nav_farmer: 'किसान पोर्टल', nav_display: 'डिस्प्ले', nav_staff: 'स्टाफ', nav_admin: 'एडमिन',
+                hero_title: 'एक कतार। दो पहुँच माध्यम। शून्य भ्रम।',
+                hero_subtitle: 'एक हाइब्रिड खरीद कतार प्रणाली जो ऑनलाइन और कियोस्क टोकन को निष्पक्ष रूप से एक रियल-टाइम कतार में जोड़ती है, जिसमें लाइव ETA, AI प्याज़ गुणवत्ता आकलन, डिजिटल/वॉइस घोषणाएँ और खरीद से भुगतान तक की पूरी ट्रैकिंग शामिल है।',
+                hero_cta1: 'किसान पोर्टल',
+                live_queue: 'लाइव कतार स्थिति', centre_name: 'तमिलनाडु खरीद केंद्र',
+                in_queue: 'कतार में', served_today: 'आज सेवा दी गई', avg_wait: 'औसत प्रतीक्षा (मिनट)', active_counters: 'सक्रिय काउंटर',
+                online_tokens: 'ऑनलाइन टोकन', kiosk_tokens: 'कियोस्क टोकन',
+                why_title: 'AgriQueue क्यों?', why_subtitle: 'सरकारी खरीद केंद्रों के लिए क्रांतिकारी कतार प्रबंधन',
+                feat1_title: 'हाइब्रिड एक्सेस', feat1_desc: 'एक ही कतार में ऑनलाइन + कियोस्क टोकन। डिजिटल पहुँच की कमी के कारण कोई किसान पीछे नहीं छूटता।',
+                feat2_title: 'निष्पक्ष कतार एल्गोरिदम', feat2_desc: 'बारी-बारी से O-K-O-K टोकन आवंटन ऑनलाइन और कियोस्क दोनों किसानों को समान अवसर सुनिश्चित करता है।',
+                feat3_title: 'रियल-टाइम दृश्यता', feat3_desc: 'लाइव कतार स्थिति और ETA किसानों को बिना इंतज़ार किए अपना समय बेहतर ढंग से तय करने में मदद करते हैं।',
+                feat4_title: 'भौतिक केंद्र स्वचालन', feat4_desc: 'डिजिटल डिस्प्ले और वॉइस घोषणाएँ सुनिश्चित करती हैं कि स्मार्टफोन के बिना भी कोई किसान अपनी बारी न चूके।',
+                feat5_title: 'शुरू से अंत तक पारदर्शिता', feat5_desc: 'गुणवत्ता जाँच, वज़न मापन, खरीद राशि और भुगतान की स्थिति रियल-टाइम में देखें।',
+                feat6_title: 'संचालन विश्लेषण', feat6_desc: 'केंद्र प्रशासकों को क्षमता बढ़ाने, प्रतीक्षा समय घटाने और दक्षता सुधारने के लिए रियल-टाइम जानकारी मिलती है।',
+                how_title: 'यह कैसे काम करता है', how_subtitle: 'किसानों के लिए सरल 5-चरणीय प्रक्रिया',
+                step1: 'पंजीकरण', step1_desc: 'ऑनलाइन या कियोस्क पर', step2: 'टोकन लें', step2_desc: 'ऑनलाइन (O) या कियोस्क (K)',
+                step3: 'कहीं भी प्रतीक्षा करें', step3_desc: 'ऐप/डिस्प्ले से ट्रैक करें', step4: 'सूचना पाएँ', step4_desc: 'डिस्प्ले + वॉइस अलर्ट',
+                step5: 'खरीद', step5_desc: 'गुणवत्ता, वज़न, राशि', step6: 'भुगतान', step6_desc: 'भुगतान की स्थिति ट्रैक करें',
+                current_time: 'वर्तमान समय', est_turn: 'अनुमानित बारी', your_token: 'आपका टोकन',
+                position: 'स्थान', est_wait: 'अनुमानित प्रतीक्षा', counter: 'काउंटर',
+                waiting_msg: 'आपकी बारी की प्रतीक्षा है...', refresh: 'रीफ्रेश', leave: 'कतार छोड़ें',
+                proc_status: 'खरीद की स्थिति', quality_check: 'गुणवत्ता जाँच', weight_measure: 'वज़न मापन',
+                proc_amount: 'खरीद राशि', pay_status: 'भुगतान स्थिति',
+                book_slot: 'अपना स्लॉट बुक करें', farmer_name: 'किसान का नाम', mobile: 'मोबाइल नंबर',
+                aadhaar: 'आधार नंबर', bank_acc: 'बैंक खाता नंबर', centre: 'खरीद केंद्र',
+                crop_type: 'फ़सल का प्रकार', est_qty: 'अनुमानित मात्रा (किग्रा)', pref_date: 'पसंदीदा तारीख',
+                pref_slot: 'पसंदीदा समय स्लॉट', book_btn: 'स्लॉट बुक करें और टोकन पाएँ',
+                slot_selected: 'चयनित स्लॉट', slot_timing: 'स्लॉट का समय', tokens_in_slot: 'स्लॉट में टोकन',
+                avg_process_time: 'औसत प्रोसेसिंग समय', est_wait_for_slot: 'इस स्लॉट के लिए अनुमानित प्रतीक्षा',
+                btn_verify_aadhaar: 'आधार सत्यापित करें', aadhaar_verified: 'आधार सत्यापित',
+                aadhaar_otp_verification: 'आधार OTP सत्यापन', test_mode_otp: 'डायनामिक टेस्ट OTP:',
+                btn_confirm_otp: 'OTP सत्यापित करें', btn_resend_otp: 'दोबारा भेजें',
+                pref_date_hint: 'सबसे जल्दी चुनी जा सकने वाली तारीख आज से 2 दिन बाद है (आज और कल उपलब्ध नहीं हैं)।',
+                staff_login: 'स्टाफ लॉगिन', username: 'उपयोगकर्ता नाम', password: 'पासवर्ड', login_btn: 'लॉगिन',
+                staff_dash: 'स्टाफ डैशबोर्ड', total_queue: 'कतार में कुल', avg_wait_time: 'औसत प्रतीक्षा समय',
+                served_tod: 'आज सेवा दी गई', ok_ratio: 'ऑनलाइन:कियोस्क अनुपात', proc_counters: 'खरीद काउंटर',
+                queue_list: 'कतार सूची', call_next: 'अगला बुलाएँ', recall: 'दोबारा बुलाएँ', complete: 'पूर्ण',
+                quality: 'गुणवत्ता', weight: 'वज़न', payment: 'भुगतान',
+                ai_quality_btn: 'AI गुणवत्ता जाँच', ai_quality: 'AI प्याज़ गुणवत्ता आकलन',
+                current: 'वर्तमान', farmer_label: 'किसान', crop_label: 'फ़सल', none: 'कोई नहीं', active_label: 'सक्रिय',
+                farmer_id: 'किसान आईडी', select_slot: 'स्लॉट चुनें', select_crop: 'फ़सल चुनें', select_centre: 'केंद्र चुनें',
+                crop_onion: 'प्याज़', crop_paddy: 'धान', crop_wheat: 'गेहूँ', crop_rice: 'चावल',
+                slot_morning: 'सुबह', slot_afternoon: 'दोपहर', slot_evening: 'शाम',
+                slot_capacity_kg: 'स्लॉट क्षमता', slot_booked_kg: 'पहले से बुक', slot_available_kg: 'उपलब्ध मात्रा',
+                kg_left: 'शेष', unit_kg: 'किग्रा', slot_full_short: 'भरा हुआ', avail_in_slot: 'इस स्लॉट में उपलब्ध:',
+                slot_full: 'यह स्लॉट भर चुका है। कृपया दूसरा स्लॉट या तारीख चुनें।',
+                qty_exceeds: 'इस स्लॉट में केवल {n} उपलब्ध है। मात्रा कम करें या दूसरा स्लॉट/तारीख चुनें।',
+                qty_exceeds_title: 'मात्रा उपलब्ध नहीं'
             }
         };
         let currentLang = 'en';
 
         function setLanguage(lang) {
             currentLang = lang;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                const oc = b.getAttribute('onclick') || '';
+                b.classList.toggle('active', oc.includes("'" + lang + "'") || b.getAttribute('data-lang') === lang);
+            });
+            document.documentElement.setAttribute('lang', lang);
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) el.textContent = translations[lang][key];
+                const val = (translations[lang] && translations[lang][key]) || translations.en[key];
+                if (val) el.textContent = val;
             });
+            refreshSlotUI();
             // Rebuild staff counters if on that page
             if (document.getElementById('staffDashboard').classList.contains('active') && isLoggedIn) {
                 buildStaffCounters();
@@ -114,6 +185,25 @@
         const mspRates = { paddy: 20.40, wheat: 22.75, rice: 30.00, onion: 25.00 };
         let activeModalCounter = null; // Tracks which counter opened the modal
 
+        // ====== Onion Quality-Based Payment Configuration ======
+        // Payment is derived from the AI quality result:
+        //   payable weight = final weight x (1 - URS% / 100)        (rejected onions are not paid)
+        //   effective rate = onion MSP x rate% of the quality status
+        // Change these values to match your procurement rules.
+        const paymentConfig = {
+            deductUrsFromWeight: true,
+            passedRatePct: 100,        // Passed (Grade A meets tolerance)  -> 100% of MSP
+            conditionalRatePct: 90,    // Conditionally passed              -> 90% of MSP
+            failedRatePct: 0           // Failed -> 0% (payment held, no auto-pay). Set e.g. 50 to still pay a reduced rate.
+        };
+
+        // Payment records created at the counters (shown in the Admin payment table)
+        let paymentRecords = [];
+
+        function formatINR(n) {
+            return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
         // Slot configuration: tokens already booked per slot per date (simulated)
         const slotConfig = {
             morning:   { label: 'Morning',   timing: '8:00 AM - 12:00 PM', startH: 8,  endH: 12, capacity: 80 },
@@ -123,6 +213,113 @@
 
         // Simulated tokens already booked for today's slots
         const slotBookings = { morning: 48, afternoon: 32, evening: 20 };
+
+        // ====== Slot capacity in KG (shared across farmers) ======
+        // Every slot can take SLOT_CAPACITY_KG in total. slotSeedKg = quantity already booked by other farmers (simulated).
+        // New bookings are added on top and stored in localStorage so the next farmer sees the reduced availability.
+        // NOTE: localStorage is per browser. For several devices to share it, store these totals in your backend.
+        const SLOT_CAPACITY_KG = 20000;
+        const slotSeedKg = { morning: 12000, afternoon: 8000, evening: 5000 };
+        const SLOT_KG_STORAGE_KEY = 'agriqueue_slot_kg_bookings';
+
+        function loadSlotKgBookings() {
+            try { return JSON.parse(localStorage.getItem(SLOT_KG_STORAGE_KEY) || '{}') || {}; } catch (e) { return {}; }
+        }
+        function saveSlotKgBookings() {
+            try { localStorage.setItem(SLOT_KG_STORAGE_KEY, JSON.stringify(slotKgBookings)); } catch (e) { /* storage unavailable */ }
+        }
+        let slotKgBookings = loadSlotKgBookings();   // { 'YYYY-MM-DD|slot': kgBookedByFarmers }
+
+        function kgKey(date, slot) { return date + '|' + slot; }
+        function getBookedKg(date, slot) { return (slotSeedKg[slot] || 0) + (slotKgBookings[kgKey(date, slot)] || 0); }
+        function getAvailableKg(date, slot) { return Math.max(0, SLOT_CAPACITY_KG - getBookedKg(date, slot)); }
+        function formatKg(n) { return Number(n).toLocaleString('en-IN') + ' ' + t('unit_kg'); }
+        function addSlotKg(date, slot, kg) {
+            const k = kgKey(date, slot);
+            slotKgBookings[k] = (slotKgBookings[k] || 0) + kg;
+            saveSlotKgBookings();
+        }
+        function releaseSlotKg(date, slot, kg) {
+            const k = kgKey(date, slot);
+            slotKgBookings[k] = Math.max(0, (slotKgBookings[k] || 0) - kg);
+            saveSlotKgBookings();
+        }
+
+        // Slot dropdown labels show the kg still available for the chosen date; full slots are disabled
+        function updateSlotOptionLabels() {
+            const sel = document.getElementById('timeSlot');
+            const dateEl = document.getElementById('preferredDate');
+            if (!sel) return;
+            const date = dateEl ? dateEl.value : '';
+            Array.from(sel.options).forEach(o => {
+                const cfg = slotConfig[o.value];
+                if (!o.value || !cfg) return;
+                let label = t('slot_' + o.value) + ' (' + cfg.timing + ')';
+                if (date) {
+                    const avail = getAvailableKg(date, o.value);
+                    label += avail > 0 ? ' - ' + formatKg(avail) + ' ' + t('kg_left') : ' - ' + t('slot_full_short');
+                    o.disabled = avail <= 0;
+                } else {
+                    o.disabled = false;
+                }
+                o.textContent = label;
+            });
+        }
+
+        // Capacity rows inside the slot info box (created once, then updated)
+        function renderSlotCapacityRows(date, slot) {
+            const box = document.getElementById('slotInfoBox');
+            if (!box) return;
+            let wrap = document.getElementById('slotKgRows');
+            if (!wrap) {
+                wrap = document.createElement('div');
+                wrap.id = 'slotKgRows';
+                const row = (key, id) => `<div class="info-row"><span class="info-label" data-i18n="${key}">${t(key)}</span><span class="info-value" id="${id}">-</span></div>`;
+                wrap.innerHTML = row('slot_capacity_kg', 'slotKgCapacity') + row('slot_booked_kg', 'slotKgBooked') + row('slot_available_kg', 'slotKgAvailable');
+                box.insertBefore(wrap, box.lastElementChild);
+            }
+            const avail = getAvailableKg(date, slot);
+            document.getElementById('slotKgCapacity').textContent = formatKg(SLOT_CAPACITY_KG);
+            document.getElementById('slotKgBooked').textContent = formatKg(getBookedKg(date, slot));
+            const availEl = document.getElementById('slotKgAvailable');
+            availEl.textContent = avail > 0 ? formatKg(avail) : t('slot_full_short');
+            availEl.style.color = avail > 0 ? (avail < SLOT_CAPACITY_KG * 0.1 ? '#d97706' : '#16a34a') : '#dc2626';
+            availEl.style.fontWeight = '700';
+        }
+
+        // Hint under the Estimated Quantity field
+        function updateQtyHint() {
+            const qtyEl = document.getElementById('estimatedQuantity');
+            if (!qtyEl) return;
+            let hint = document.getElementById('qtyAvailHint');
+            if (!hint) {
+                hint = document.createElement('small');
+                hint.id = 'qtyAvailHint';
+                hint.className = 'd-block mt-1';
+                hint.style.fontSize = '0.78rem';
+                qtyEl.parentNode.appendChild(hint);
+            }
+            const date = document.getElementById('preferredDate').value;
+            const slot = document.getElementById('timeSlot').value;
+            if (!date || !slot) { hint.textContent = ''; return; }
+            const avail = getAvailableKg(date, slot);
+            const qty = parseFloat(qtyEl.value) || 0;
+            hint.textContent = t('avail_in_slot') + ' ' + formatKg(avail);
+            hint.className = 'd-block mt-1 ' + (qty > avail || avail === 0 ? 'text-danger fw-bold' : 'text-success');
+        }
+
+        // Re-translate dropdown placeholders / crop names and refresh slot info (called on language change)
+        function refreshSlotUI() {
+            const setOpt = (id, map) => {
+                const sel = document.getElementById(id);
+                if (!sel) return;
+                Array.from(sel.options).forEach(o => { const k = map[o.value]; if (k) o.textContent = t(k); });
+            };
+            setOpt('timeSlot', { '': 'select_slot' });
+            setOpt('cropType', { '': 'select_crop', onion: 'crop_onion', paddy: 'crop_paddy', wheat: 'crop_wheat', rice: 'crop_rice' });
+            setOpt('procurementCentre', { '': 'select_centre' });
+            updateSlotInfo();
+        }
 
         // ====== Aadhaar OTP & Date Restriction State ======
         let isAadhaarVerified = false;
@@ -388,7 +585,8 @@
             }
         }
 
-        function resetAadhaarVerification() {
+        // skipFocus === true -> do not move focus to the Aadhaar field (used when the whole form is reset)
+        function resetAadhaarVerification(skipFocus) {
             isAadhaarVerified = false;
             verifiedAadhaarNumber = null;
             aadhaarVerificationToken = null;
@@ -402,7 +600,7 @@
             const aadhaarEl = document.getElementById('farmerAadhaar');
             if (aadhaarEl) {
                 aadhaarEl.readOnly = false;
-                aadhaarEl.focus();
+                if (skipFocus !== true) aadhaarEl.focus();
             }
 
             const sendBtn = document.getElementById('btnSendAadhaarOtp');
@@ -425,8 +623,8 @@
             counterData = {
                 1: { current: 'O-021', farmer: 'Test Farmer', crop: 'Onion', status: 'active', serving: true },
                 2: { current: 'K-022', farmer: 'Suresh Yadav', crop: 'Wheat', status: 'active', serving: true },
-                3: { current: 'O-023', farmer: 'Anita Devi', crop: 'Paddy', status: 'active', serving: true },
-                4: { current: 'K-024', farmer: 'Mohan Singh', crop: 'Rice', status: 'active', serving: false },
+                3: { current: 'O-023', farmer: 'Anita Devi', crop: 'Onion', status: 'active', serving: true },
+                4: { current: 'K-024', farmer: 'Mohan Singh', crop: 'Onion', status: 'active', serving: false },
                 5: { current: 'O-025', farmer: 'Priya Sharma', crop: 'Paddy', status: 'active', serving: false }
             };
         }
@@ -435,8 +633,8 @@
             queueData = [
                 { token: 'O-021', farmer: 'Test Farmer',  type: 'online', crop: 'Onion', quantity: '100', status: 'serving', counter: 1, qualityVerified: false, quality: null },
                 { token: 'K-022', farmer: 'Suresh Yadav',  type: 'kiosk',  crop: 'Wheat', quantity: '1800', status: 'serving', counter: 2 },
-                { token: 'O-023', farmer: 'Anita Devi',    type: 'online', crop: 'Paddy', quantity: '3200', status: 'serving', counter: 3 },
-                { token: 'K-024', farmer: 'Mohan Singh',   type: 'kiosk',  crop: 'Rice',  quantity: '1500', status: 'waiting', counter: null },
+                { token: 'O-023', farmer: 'Anita Devi',    type: 'online', crop: 'Onion', quantity: '3200', status: 'serving', counter: 3 },
+                { token: 'K-024', farmer: 'Mohan Singh',   type: 'kiosk',  crop: 'Onion',  quantity: '1500', status: 'waiting', counter: null },
                 { token: 'O-025', farmer: 'Priya Sharma',  type: 'online', crop: 'Paddy', quantity: '2100', status: 'waiting', counter: null },
                 { token: 'K-026', farmer: 'Ramesh Patel',  type: 'kiosk',  crop: 'Wheat', quantity: '2800', status: 'waiting', counter: null },
                 { token: 'O-027', farmer: 'Sunita Devi',   type: 'online', crop: 'Paddy', quantity: '1900', status: 'waiting', counter: null },
@@ -511,10 +709,11 @@
 
         // ====== Slot info update on date/slot change ======
         function updateSlotInfo() {
+            updateSlotOptionLabels();
             const dateStr = document.getElementById('preferredDate').value;
             const slotKey = document.getElementById('timeSlot').value;
             const box = document.getElementById('slotInfoBox');
-            if (!dateStr || !slotKey) { box.classList.remove('show'); return; }
+            if (!dateStr || !slotKey) { box.classList.remove('show'); updateQtyHint(); return; }
             const slot = slotConfig[slotKey];
             const booked = slotBookings[slotKey] || 0;
             document.getElementById('slotInfoName').textContent = slot.label + ' Slot';
@@ -523,6 +722,8 @@
             document.getElementById('slotInfoCounters').textContent = ACTIVE_COUNTERS;
             document.getElementById('slotInfoAvgTime').textContent = AVG_PROCESS_MIN + ' min';
             document.getElementById('slotInfoEstWait').textContent = getSlotEstimation(dateStr, slotKey);
+            renderSlotCapacityRows(dateStr, slotKey);
+            updateQtyHint();
             box.classList.add('show');
         }
 
@@ -573,10 +774,29 @@
                 const farmerDisplay = isServing ? c.farmer : '-';
                 const cropDisplay = isServing ? c.crop : '-';
 
-                // Verification check: Weight is only enabled after quality verification
                 const tokenData = isServing ? queueData.find(q => q.token === c.current) : null;
-                const isQualityDone = tokenData && (tokenData.qualityVerified || (tokenData.quality && tokenData.quality.status));
+
+                // AI quality check applies to Onion only
+                const cropName = isServing ? ((tokenData && tokenData.crop) || c.crop || '').toLowerCase() : '';
+                const isOnion = isServing && cropName === 'onion';
+
+                // Non-onion crops skip AI quality, so Weight is available right away.
+                // Onion requires the AI quality check to be completed first.
+                const isQualityDone = isServing && (
+                    !isOnion || (tokenData && (tokenData.qualityVerified || (tokenData.quality && tokenData.quality.status)))
+                );
                 const isWeightDone = tokenData && (tokenData.finalWeight != null);
+                const isPaid = tokenData && tokenData.paid;
+
+                const qualityDisabledAttr = !isServing
+                    ? 'disabled'
+                    : (!isOnion ? 'disabled title="AI quality check is available for Onion only"' : '');
+                const weightDisabledAttr = (!isServing || !isQualityDone)
+                    ? 'disabled title="Complete quality check first"'
+                    : '';
+                const paymentDisabledAttr = (!isServing || !isWeightDone)
+                    ? 'disabled title="Complete weight measurement first"'
+                    : (isPaid ? 'disabled title="Payment already completed"' : '');
 
                 document.getElementById('staffCounter' + i).innerHTML = `
                     <div class="counter-card ${isServing ? 'active' : 'inactive'}">
@@ -595,14 +815,14 @@
                             <button class="btn btn-sm btn-danger flex-fill" onclick="completeCurrentToken(${i})" ${!isServing ? 'disabled' : ''}><i class="bi bi-check-lg"></i> ${t('complete')}</button>
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-primary flex-fill" onclick="openAIQualityModal(${i})" ${!isServing ? 'disabled' : ''}>
+                            <button class="btn btn-sm btn-primary flex-fill" onclick="openAIQualityModal(${i})" ${qualityDisabledAttr}>
                                 <i class="bi bi-camera-fill me-1"></i> ${t('ai_quality_btn') || 'AI Quality'}
                             </button>
-                            <button class="btn btn-sm btn-info flex-fill" onclick="openModal('weightModal', ${i})" ${(!isServing || !isQualityDone) ? 'disabled title="Complete quality check first"' : ''}>
+                            <button class="btn btn-sm btn-info flex-fill" onclick="openModal('weightModal', ${i})" ${weightDisabledAttr}>
                                 <i class="bi bi-speedometer"></i> ${t('weight')}
                             </button>
-                            <button class="btn btn-sm btn-warning flex-fill" onclick="openModal('paymentModal', ${i})" ${(!isServing || !isWeightDone) ? 'disabled title="Complete weight measurement first"' : ''}>
-                                <i class="bi bi-cash-stack"></i> ${t('payment')}
+                            <button class="btn btn-sm ${isPaid ? 'btn-success' : 'btn-warning'} flex-fill" onclick="openModal('paymentModal', ${i})" ${paymentDisabledAttr}>
+                                <i class="bi ${isPaid ? 'bi-check2-circle' : 'bi-cash-stack'}"></i> ${isPaid ? 'Paid' : t('payment')}
                             </button>
                         </div>
                     </div>`;
@@ -750,7 +970,7 @@
         // ====== Display Screen ======
         function updateDisplayScreen() {
             const serving = queueData.filter(q => q.status === 'serving');
-            if (serving.length > 0) document.getElementById('currentTokenDisplay').textContent = serving[0].token;
+            document.getElementById('currentTokenDisplay').textContent = serving.length > 0 ? serving[0].token : '-';
             for (let i = 1; i <= 5; i++) {
                 const el = document.getElementById('counter' + i + 'Display');
                 if (counterData[i] && counterData[i].serving) {
@@ -797,6 +1017,22 @@
                 return;
             }
 
+            // 3. Validate quantity against the kg still available in the chosen slot
+            {
+                const reqQty = parseFloat(document.getElementById('estimatedQuantity').value) || 0;
+                const reqDate = document.getElementById('preferredDate').value;
+                const reqSlot = document.getElementById('timeSlot').value;
+                if (reqDate && reqSlot) {
+                    const availKg = getAvailableKg(reqDate, reqSlot);
+                    if (availKg <= 0 || reqQty > availKg) {
+                        showNotification(t('qty_exceeds_title'), availKg <= 0 ? t('slot_full') : t('qty_exceeds').replace('{n}', formatKg(availKg)));
+                        updateSlotInfo();
+                        document.getElementById('estimatedQuantity').focus();
+                        return;
+                    }
+                }
+            }
+
             document.getElementById('loadingSpinner').classList.add('active');
             setTimeout(() => {
                 document.getElementById('loadingSpinner').classList.remove('active');
@@ -812,7 +1048,20 @@
                     aadhaar: cleanAadhaar,
                     verificationToken: aadhaarVerificationToken
                 };
+                // Reserve the booked quantity in the chosen slot so the next farmer sees the reduced availability
+                {
+                    const bkDate = document.getElementById('preferredDate').value;
+                    const bkSlot = document.getElementById('timeSlot').value;
+                    const bkQty = parseFloat(newToken.quantity) || 0;
+                    if (bkDate && bkSlot && bkQty > 0) {
+                        newToken.slotDate = bkDate;
+                        newToken.slotKeyName = bkSlot;
+                        newToken.bookedKg = bkQty;
+                        addSlotKg(bkDate, bkSlot, bkQty);
+                    }
+                }
                 queueData.push(newToken);
+                updateSlotInfo();
                 currentToken = token;
 
                 // Calculate accurate ETA based on selected slot
@@ -849,7 +1098,11 @@
                 document.getElementById('expectedTime').textContent = expectedTime.toLocaleTimeString();
 
                 showNotification('Token Booked', `Your token ${token} has been booked. ETA: ${etaText}`);
-                
+
+                // Booking form is hidden while a token is active; it returns after "Leave Queue"
+                setBookingFormVisible(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
                 // Start the pipeline tracker - auto-advances through confirmed → checked_in → waiting
                 startPipelineOnBooking();
             }, 1500);
@@ -875,15 +1128,118 @@
             showNotification('Updated', 'Token status refreshed');
         }
 
+        // ====== Show / hide the booking form ======
+        function setBookingFormVisible(show) {
+            const card = document.getElementById('bookingCard');
+            if (card) card.style.display = show ? '' : 'none';
+        }
+
+        // ====== Reset the token card + Procurement Status card to their initial (pending) look ======
+        function resetProcurementStatusUI() {
+            const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+            setText('qualityDetails', 'Pending: AI quality inspection and human verification');
+            setText('weightDetails', 'Pending: Weight measurement');
+            setText('amountDetails', 'Pending: Procurement amount will be calculated');
+            setText('paymentDetails', 'Pending: Amount will be transferred to your bank account');
+
+            ['qualityStep', 'weightStep', 'amountStep', 'paymentStep'].forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.classList.remove('completed', 'active-step');
+                if (i === 0) el.classList.add('active-step');
+            });
+
+            const reportBtn = document.getElementById('farmerViewReportBtn');
+            if (reportBtn) reportBtn.style.display = 'none';
+
+            // Token card values
+            setText('tokenNumber', '-');
+            setText('queuePosition', '-');
+            setText('waitTime', '-');
+            setText('counterNumber', '-');
+            const pb = document.getElementById('progressBar');
+            if (pb) pb.style.width = '10%';
+            const sm = document.getElementById('statusMessage');
+            if (sm) sm.innerHTML = '<i class="bi bi-info-circle me-2"></i><span data-i18n="waiting_msg">' + t('waiting_msg') + '</span>';
+        }
+
+        // ====== Reset the booking form to a fresh, empty state ======
+        function resetBookingForm() {
+            const form = document.getElementById('joinQueueForm');
+            if (form) form.reset();
+
+            // Aadhaar verification back to "not verified" (without stealing focus / scroll position)
+            resetAadhaarVerification(true);
+            const otpInput = document.getElementById('aadhaarOtpInput');
+            if (otpInput) otpInput.value = '';
+            const simAlert = document.getElementById('otpSimulatedAlert');
+            if (simAlert) simAlert.style.display = 'none';
+            const resendBtn = document.getElementById('btnResendAadhaarOtp');
+            if (resendBtn) {
+                resendBtn.disabled = true;
+                resendBtn.innerHTML = `<i class="bi bi-arrow-clockwise me-1"></i>${t('btn_resend_otp')}`;
+            }
+            const timerEl = document.getElementById('otpTimerDisplay');
+            if (timerEl) timerEl.textContent = '05:00';
+
+            // Preferred date back to the earliest allowed date
+            const dateEl = document.getElementById('preferredDate');
+            if (dateEl) {
+                dateEl.setAttribute('min', getMinPreferredDate(2));
+                dateEl.value = getMinPreferredDate(2);
+            }
+
+            // Hide slot box and quantity hint
+            const box = document.getElementById('slotInfoBox');
+            if (box) box.classList.remove('show');
+            const hint = document.getElementById('qtyAvailHint');
+            if (hint) hint.textContent = '';
+
+            updateSlotInfo();
+        }
+
         function leaveQueue() {
             resetPipeline();
-            if (!currentToken) return;
-            const idx = queueData.findIndex(q => q.token === currentToken);
-            if (idx !== -1) queueData.splice(idx, 1);
+
+            if (currentToken) {
+                const idx = queueData.findIndex(q => q.token === currentToken);
+                if (idx !== -1) {
+                    const _left = queueData[idx];
+
+                    // free the counter if this token was being served
+                    if (_left.status === 'serving' && _left.counter && counterData[_left.counter]) {
+                        counterData[_left.counter].serving = false;
+                        counterData[_left.counter].current = null;
+                    }
+
+                    // give the booked kg back to the slot
+                    if (_left.bookedKg) releaseSlotKg(_left.slotDate, _left.slotKeyName, _left.bookedKg);
+
+                    queueData.splice(idx, 1);
+                }
+            }
+
+            // Hide everything that belongs to the old token
             document.getElementById('tokenStatus').style.display = 'none';
             document.getElementById('procurementStatus').style.display = 'none';
+            const pipelineCard = document.getElementById('pipelineTrackerCard');
+            if (pipelineCard) pipelineCard.style.display = 'none';
+
             currentToken = null;
-            showNotification('Left Queue', 'You have left the queue');
+            activeQualityToken = null;
+            resetProcurementStatusUI();
+
+            // Only the Book Slot form is available again, empty and ready
+            resetBookingForm();
+            setBookingFormVisible(true);
+            document.getElementById('bookingCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            updateDisplayScreen();
+            if (isLoggedIn) refreshDashboard();
+            updateHomeStatsDisplay();
+
+            showNotification('Left Queue', 'You have left the queue. You can book a new slot.');
         }
 
         // ====== Kiosk ======
@@ -924,30 +1280,359 @@
             m.show();
         }
 
+        // ====== Quality-Based Payment Engine ======
+        // Returns a full payment breakdown for a token.
+        // Onion: uses the AI quality result (URS %, Grade A %) + overall quality status.
+        // Other crops: plain final weight x MSP.
+        function calculateQualityBasedPayment(tokenData, overrides) {
+            const crop = ((tokenData && tokenData.crop) || '').toLowerCase();
+            const finalWeight = (overrides && overrides.weight != null) ? overrides.weight : ((tokenData && tokenData.finalWeight) || 0);
+            const baseRate = mspRates[crop] || 0;
+
+            const info = {
+                crop,
+                isOnion: crop === 'onion',
+                finalWeight,
+                baseRate,
+                qualityStatus: null,
+                gradeA: null,
+                urs: 0,
+                ursDeductionKg: 0,
+                payableWeight: finalWeight,
+                ratePct: 100,
+                effectiveRate: baseRate,
+                amount: 0,
+                held: false,
+                reason: ''
+            };
+
+            if (info.isOnion) {
+                const q = tokenData.quality || {};
+                const pct = (q.aiAssessment && q.aiAssessment.percentages) || {};
+                info.qualityStatus = (overrides && overrides.status) || q.status || tokenData.qualityStatus || null;
+                info.gradeA = (overrides && overrides.gradeA != null) ? overrides.gradeA : (pct.gradeA != null ? pct.gradeA : null);
+                info.urs = (overrides && overrides.urs != null) ? overrides.urs : (pct.urs != null ? pct.urs : 0);
+
+                // Per-class breakdown: the lot weight is shared across the DETECTED onions only,
+                // and each class is paid at (1 - its URS reject factor) of the MSP.
+                const cnt = (overrides && overrides.counts) || (q.aiAssessment && q.aiAssessment.counts) || null;
+                if (cnt) {
+                    const classes = ['good', 'undersized', 'sprouted', 'damaged', 'rotten'];
+                    const totalOnions = classes.reduce((a, k) => a + (cnt[k] || 0), 0);
+                    if (totalOnions > 0) {
+                        info.breakdown = classes.filter(k => (cnt[k] || 0) > 0).map(k => {
+                            const payPct = k === 'good' ? 100 : Number(((1 - clientGradingConfig.urs[k + 'Factor']) * 100).toFixed(1));
+                            const weightKg = Number((finalWeight * cnt[k] / totalOnions).toFixed(2));
+                            return {
+                                cls: k.toUpperCase(),
+                                count: cnt[k],
+                                sharePct: Number((cnt[k] / totalOnions * 100).toFixed(1)),
+                                weightKg,
+                                payPct,
+                                payableKg: Number((weightKg * payPct / 100).toFixed(2))
+                            };
+                        });
+                    }
+                }
+
+                if (paymentConfig.deductUrsFromWeight) {
+                    info.ursDeductionKg = Number((finalWeight * (info.urs / 100)).toFixed(2));
+                    info.payableWeight = Number((finalWeight - info.ursDeductionKg).toFixed(2));
+                }
+
+                if (info.qualityStatus === 'failed') info.ratePct = paymentConfig.failedRatePct;
+                else if (info.qualityStatus === 'conditionally_passed') info.ratePct = paymentConfig.conditionalRatePct;
+                else info.ratePct = paymentConfig.passedRatePct;
+
+                info.effectiveRate = Number((baseRate * info.ratePct / 100).toFixed(2));
+
+                if (!info.qualityStatus) {
+                    info.held = true;
+                    info.reason = 'AI quality assessment not completed';
+                } else if (info.ratePct <= 0) {
+                    info.held = true;
+                    info.reason = 'Quality status FAILED - payment held (rate ' + info.ratePct + '% of MSP)';
+                }
+            }
+
+            info.amount = info.held ? 0 : Number((info.payableWeight * info.effectiveRate).toFixed(2));
+            return info;
+        }
+
+        // Shows the amount / payment status on the Farmer Portal for the farmer's own token
+        function updateFarmerPaymentView(tokenData, info, state) {
+            if (!tokenData || tokenData.token !== currentToken) return;
+            const amountEl = document.getElementById('amountDetails');
+            const payEl = document.getElementById('paymentDetails');
+            const payStep = document.getElementById('paymentStep');
+            const amountStep = document.getElementById('amountStep');
+
+            if (state === 'estimate') {
+                if (amountEl) {
+                    amountEl.textContent = info.held
+                        ? 'Quality ' + (info.qualityStatus || '').toUpperCase().replace('_', ' ') + ': payment will be held'
+                        : `Rate after quality: ${formatINR(info.effectiveRate)}/kg (Grade A ${info.gradeA}%, URS ${info.urs}%). Amount is final after weighing.`;
+                }
+                return;
+            }
+
+            if (amountEl) {
+                amountEl.textContent = info.held
+                    ? `Held: ${info.reason}`
+                    : `${formatINR(info.amount)} = ${info.payableWeight} kg x ${formatINR(info.effectiveRate)}/kg` +
+                      (info.isOnion ? ` (Grade A ${info.gradeA}%, URS ${info.urs}%)` : '');
+            }
+
+            if (state === 'processing') {
+                if (payEl) payEl.textContent = 'Processing: auto-transfer of ' + formatINR(info.amount) + ' to your bank account';
+            } else if (state === 'paid') {
+                if (payEl) payEl.textContent = 'Completed: ' + formatINR(info.amount) + ' paid to your bank account (Ref ' + tokenData.paymentInfo.reference + ')';
+                if (payStep) { payStep.classList.add('completed'); payStep.classList.remove('active-step'); }
+                if (amountStep) { amountStep.classList.add('completed'); amountStep.classList.remove('active-step'); }
+            } else if (state === 'held') {
+                if (payEl) payEl.textContent = 'On hold: ' + info.reason;
+            }
+        }
+
+        // Records the payment, updates pipeline, farmer view and admin table
+        function finalizePayment(tokenData, info, opts) {
+            opts = opts || {};
+            const isOwnToken = tokenData.token === currentToken;
+            const reference = opts.reference || ('AUTO-' + tokenData.token + '-' + Date.now().toString(36).toUpperCase());
+
+            // Processing stage
+            updateFarmerPaymentView(tokenData, info, 'processing');
+            if (isOwnToken && currentPipelineStageIndex >= 0) {
+                currentPipelineStageIndex = 9; // payment_processing
+                renderPipeline();
+            }
+
+            const complete = () => {
+                tokenData.paid = true;
+                tokenData.paymentInfo = Object.assign({}, info, {
+                    method: opts.method || 'bank_transfer',
+                    reference,
+                    paidAt: new Date().toLocaleString(),
+                    auto: !!opts.auto
+                });
+
+                paymentRecords.unshift({
+                    token: tokenData.token,
+                    farmer: tokenData.farmer,
+                    crop: tokenData.crop,
+                    quantity: String(info.payableWeight),
+                    amount: Number(info.amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                    status: 'completed'
+                });
+
+                if (isOwnToken && currentPipelineStageIndex >= 0) {
+                    currentPipelineStageIndex = 10; // payment_completed
+                    renderPipeline();
+                }
+                updateFarmerPaymentView(tokenData, info, 'paid');
+
+                showNotification(
+                    opts.auto ? 'Automatic Payment Completed' : 'Payment Completed',
+                    `Token ${tokenData.token}: ${formatINR(info.amount)} paid (${info.payableWeight} kg x ${formatINR(info.effectiveRate)}/kg)`
+                );
+                if (isLoggedIn) refreshDashboard();
+            };
+
+            setTimeout(complete, opts.auto ? 1200 : 600);
+        }
+
+        // ====== Payment Details: Quality Modal Panel + Digital Report ======
+        function paymentStateLabel(info) {
+            if (!info) return { text: 'N/A', cls: 'bg-secondary' };
+            if (info.basis === 'paid') return { text: 'PAID', cls: 'bg-success' };
+            if (info.held) return { text: 'HELD', cls: 'bg-danger' };
+            if (info.basis === 'final') return { text: 'FINAL AMOUNT', cls: 'bg-primary' };
+            return { text: 'ESTIMATE', cls: 'bg-warning text-dark' };
+        }
+
+        // Snapshot of the payment for a token: the real payment if already paid, otherwise a live calculation.
+        // Weight = measured final weight if available, else the declared lot weight (estimate).
+        function getPaymentSnapshot(tokenData, overrides) {
+            if (!tokenData || (tokenData.crop || '').toLowerCase() !== 'onion') return null;
+            if (tokenData.paid && tokenData.paymentInfo) return Object.assign({}, tokenData.paymentInfo, { basis: 'paid' });
+            const hasFinal = tokenData.finalWeight != null;
+            const weight = hasFinal ? tokenData.finalWeight : (parseFloat(tokenData.quantity) || 0);
+            const info = calculateQualityBasedPayment(tokenData, Object.assign({}, overrides || {}, { weight }));
+            info.basis = hasFinal ? 'final' : 'estimated';
+            return info;
+        }
+
+        // Live estimate inside the quality modal (uses current AI result + selected overall status)
+        function getLivePaymentEstimate() {
+            const tokenData = queueData.find(q => q.token === activeQualityToken);
+            if (!tokenData) return null;
+            if (!currentAiDetections || currentAiDetections.length === 0) return getPaymentSnapshot(tokenData);
+            const metrics = calculateClientQualityMetrics(currentAiDetections);
+            const statusEl = document.getElementById('qualityStatus');
+            return getPaymentSnapshot(tokenData, {
+                status: statusEl ? statusEl.value : null,
+                gradeA: metrics.percentages.gradeA,
+                urs: metrics.percentages.urs,
+                counts: metrics.counts
+            });
+        }
+
+        function ensureQualityPaymentPanel() {
+            let panel = document.getElementById('qualityPaymentPanel');
+            if (panel) return panel;
+            const moistureEl = document.getElementById('moistureContent');
+            const sectionB = moistureEl ? moistureEl.closest('.border-top') : null;
+            if (!sectionB) return null;
+            panel = document.createElement('div');
+            panel.id = 'qualityPaymentPanel';
+            panel.className = 'mt-4 pt-2 border-top';
+            sectionB.parentNode.insertBefore(panel, sectionB);
+            return panel;
+        }
+
+        function renderQualityPaymentPanel() {
+            const panel = ensureQualityPaymentPanel();
+            if (!panel) return;
+
+            const tokenData = queueData.find(q => q.token === activeQualityToken);
+            const hasAnalysis = currentAiDetections && currentAiDetections.length > 0;
+            const alreadyPaid = tokenData && tokenData.paid;
+
+            if (!hasAnalysis && !alreadyPaid) {
+                panel.innerHTML = `
+                    <div class="section-header-banner">
+                        <span><i class="bi bi-cash-coin me-2 text-warning"></i>PAYMENT DETAILS (QUALITY-BASED)</span>
+                        <small class="badge bg-secondary-subtle text-secondary">Waiting for AI analysis</small>
+                    </div>
+                    <div class="text-muted small fst-italic">Capture an onion sample and run the AI analysis to see the quality-based payment calculation here.</div>`;
+                return;
+            }
+
+            const info = getLivePaymentEstimate();
+            if (!info) { panel.innerHTML = ''; return; }
+            const st = paymentStateLabel(info);
+            const basisText = info.basis === 'paid' ? 'Paid weight' : info.basis === 'final' ? 'Final weight (weighed)' : 'Lot weight (declared, until weighing)';
+
+            panel.innerHTML = `
+                <div class="section-header-banner">
+                    <span><i class="bi bi-cash-coin me-2 text-warning"></i>PAYMENT DETAILS (QUALITY-BASED)</span>
+                    <small class="badge ${st.cls}">${st.text}</small>
+                </div>
+                <div class="row g-3 align-items-stretch">
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">${basisText}</small><strong>${info.finalWeight} kg</strong></div>
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">URS (reject) deduction</small><strong>${info.urs}% = ${info.ursDeductionKg} kg</strong></div>
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">Payable weight</small><strong>${info.payableWeight} kg</strong></div>
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">Onion MSP</small><strong>${formatINR(info.baseRate)}/kg</strong></div>
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">Quality status</small><strong>${(info.qualityStatus || '-').replace('_', ' ').toUpperCase()}</strong></div>
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">Grade A</small><strong>${info.gradeA != null ? info.gradeA + '%' : '-'}</strong></div>
+                    <div class="col-6 col-md-3"><small class="text-muted d-block">Rate applied</small><strong>${info.ratePct}% = ${formatINR(info.effectiveRate)}/kg</strong></div>
+                    <div class="col-6 col-md-3">
+                        <small class="text-muted d-block">${info.basis === 'estimated' ? 'Estimated amount' : 'Total amount'}</small>
+                        <strong class="fs-5 ${info.held ? 'text-danger' : 'text-success'}">${formatINR(info.amount)}</strong>
+                    </div>
+                </div>
+                ${paymentBreakdownTableHtml(info)}
+                ${info.held ? `<div class="alert alert-danger py-2 px-3 small mt-3 mb-0"><i class="bi bi-exclamation-triangle-fill me-1"></i>${info.reason}. No automatic payment will be made.</div>` : ''}
+                ${info.basis === 'paid' ? `<div class="alert alert-success py-2 px-3 small mt-3 mb-0"><i class="bi bi-check-circle-fill me-1"></i>Paid on ${info.paidAt} (Ref ${info.reference})</div>` : ''}
+                ${info.basis === 'estimated' && !info.held ? `<div class="text-muted small fst-italic mt-2">Amount updates automatically when you change classifications or the overall quality status. The final amount is paid automatically once the weight is saved.</div>` : ''}`;
+        }
+
+        function paymentBreakdownTableHtml(info) {
+            if (!info || !info.breakdown || !info.breakdown.length) return '';
+            const rows = info.breakdown.map(b => `
+                <tr><td class="text-start fw-bold">${b.cls}</td><td>${b.count}</td><td>${b.sharePct}%</td><td>${b.weightKg} kg</td><td>${b.payPct}%</td><td>${b.payableKg} kg</td></tr>`).join('');
+            return `
+                <div class="table-responsive mt-3">
+                    <table class="table table-sm table-bordered text-center align-middle mb-1" style="font-size:0.82rem;">
+                        <thead class="table-light"><tr><th class="text-start">Detected onions</th><th>Count</th><th>Share</th><th>Weight</th><th>Paid at</th><th>Payable</th></tr></thead>
+                        <tbody>${rows}</tbody>
+                        <tfoot><tr class="fw-bold"><td class="text-start">Total</td><td>${info.breakdown.reduce((a, b) => a + b.count, 0)}</td><td>100%</td><td>${info.finalWeight} kg</td><td>-</td><td>${info.payableWeight} kg</td></tr></tfoot>
+                    </table>
+                </div>`;
+        }
+
+        // Adds / updates the "Payment Details" section inside the digital quality report
+        function renderReportPayment(payment) {
+            const imgEl = document.getElementById('repAnnotatedImage');
+            if (!imgEl) return;
+            let sec = document.getElementById('repPaymentSection');
+            if (!sec) {
+                const annotatedTitle = imgEl.closest('.text-center') ? imgEl.closest('.text-center').previousElementSibling : null;
+                if (!annotatedTitle) return;
+                sec = document.createElement('div');
+                sec.id = 'repPaymentSection';
+                annotatedTitle.parentNode.insertBefore(sec, annotatedTitle);
+            }
+            if (!payment) { sec.innerHTML = ''; return; }
+
+            const st = paymentStateLabel(payment);
+            const amountLabel = payment.basis === 'paid' ? 'Amount Paid' : payment.basis === 'estimated' ? 'Estimated Amount' : 'Payable Amount';
+            sec.innerHTML = `
+                <div class="report-section-title">Payment Details (Quality-Based)</div>
+                <div class="row g-2 mb-2">
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">Payment Status</small><span class="badge ${st.cls}">${st.text}</span></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">${payment.basis === 'estimated' ? 'Lot Weight (declared)' : 'Final Weight'}</small><strong>${payment.finalWeight} kg</strong></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">URS Deduction</small><strong>${payment.urs}% = ${payment.ursDeductionKg} kg</strong></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">Payable Weight</small><strong>${payment.payableWeight} kg</strong></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">Onion MSP</small><strong>${formatINR(payment.baseRate)}/kg</strong></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">Rate Applied</small><strong>${payment.ratePct}% = ${formatINR(payment.effectiveRate)}/kg</strong></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">${amountLabel}</small><strong class="fs-6 ${payment.held ? 'text-danger' : 'text-success'}">${formatINR(payment.amount)}</strong></div>
+                    <div class="col-6 col-sm-3"><small class="text-muted d-block">Payment Reference</small><strong>${payment.reference || '-'}</strong></div>
+                </div>
+                ${paymentBreakdownTableHtml(payment)}
+                ${payment.held ? `<div class="small text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i>${payment.reason}</div>` : ''}
+                ${payment.basis === 'paid' ? `<div class="small text-muted mb-2">Paid on ${payment.paidAt} via ${(payment.method || 'bank_transfer').replace('_', ' ')}${payment.auto ? ' (automatic)' : ''}.</div>` : ''}
+                ${payment.basis === 'estimated' ? `<div class="small text-muted fst-italic mb-2">Estimate based on declared lot weight. Final amount is calculated after weight measurement.</div>` : ''}`;
+        }
+
         function populatePaymentModal(counterNum) {
             const c = counterData[counterNum];
             if (!c || !c.serving) return;
-            
+
             // Find the token data associated with the serving counter
             const tokenData = queueData.find(q => q.token === c.current);
             if (!tokenData) return;
 
-            // Use the final weight saved during the Weight Measurement step (or 0 if not done yet)
-            const finalWeight = tokenData.finalWeight || 0;
+            const info = tokenData.paymentInfo && tokenData.paid ? tokenData.paymentInfo : calculateQualityBasedPayment(tokenData);
             const crop = tokenData.crop || '-';
-            
-            // Determine MSP based on crop type
-            const mspRate = mspRates[crop.toLowerCase()] || 0;
-            
-            // Calculate Total Amount
-            const totalAmount = (finalWeight * mspRate).toFixed(2);
 
             // Populate the modal fields
             document.getElementById('paymentFarmerName').textContent = c.farmer;
             document.getElementById('paymentCrop').textContent = crop;
-            document.getElementById('paymentWeight').textContent = finalWeight + ' kg';
-            document.getElementById('paymentMSP').textContent = '₹' + mspRate.toFixed(2) + '/kg';
-            document.getElementById('paymentAmount').textContent = '₹' + totalAmount;
+            document.getElementById('paymentWeight').textContent = info.finalWeight + ' kg';
+            document.getElementById('paymentMSP').textContent = formatINR(info.baseRate) + '/kg';
+            document.getElementById('paymentAmount').textContent = formatINR(info.amount);
+
+            // Quality-based breakdown (inserted dynamically, no HTML change needed)
+            const body = document.querySelector('#paymentModal .modal-body');
+            let bd = document.getElementById('paymentBreakdown');
+            if (!bd) {
+                bd = document.createElement('div');
+                bd.id = 'paymentBreakdown';
+                body.insertBefore(bd, body.firstElementChild.nextSibling);
+            }
+
+            if (info.isOnion) {
+                const statusLabel = (info.qualityStatus || 'pending').replace('_', ' ').toUpperCase();
+                const badgeCls = info.qualityStatus === 'failed' ? 'bg-danger' : info.qualityStatus === 'conditionally_passed' ? 'bg-warning text-dark' : 'bg-success';
+                bd.innerHTML = `
+                    <div class="border rounded-3 p-3 mb-3 bg-light small">
+                        <div class="fw-bold mb-2"><i class="bi bi-robot me-1 text-primary"></i>Quality-Based Calculation (AI Onion Assessment)</div>
+                        <div class="d-flex justify-content-between"><span>Quality Status</span><span class="badge ${badgeCls}">${statusLabel}</span></div>
+                        <div class="d-flex justify-content-between"><span>Grade A</span><strong>${info.gradeA != null ? info.gradeA + '%' : '-'}</strong></div>
+                        <div class="d-flex justify-content-between"><span>URS (reject) deduction</span><strong>${info.urs}% = ${info.ursDeductionKg} kg</strong></div>
+                        <div class="d-flex justify-content-between"><span>Payable Weight</span><strong>${info.payableWeight} kg</strong></div>
+                        <div class="d-flex justify-content-between"><span>Rate applied</span><strong>${info.ratePct}% of MSP = ${formatINR(info.effectiveRate)}/kg</strong></div>
+                        ${info.held ? `<div class="text-danger mt-2"><i class="bi bi-exclamation-triangle-fill me-1"></i>${info.reason}</div>` : ''}
+                        ${tokenData.paid ? `<div class="text-success mt-2"><i class="bi bi-check-circle-fill me-1"></i>Auto-paid on ${tokenData.paymentInfo.paidAt} (Ref ${tokenData.paymentInfo.reference})</div>` : ''}
+                    </div>`;
+            } else {
+                bd.innerHTML = '';
+            }
+
+            // Pre-fill payment reference for auto payments
+            const refEl = document.getElementById('paymentReference');
+            if (refEl && tokenData.paid) refEl.value = tokenData.paymentInfo.reference;
         }
 
         // ====== AI Onion Quality Assessment & Camera Module ======
@@ -979,6 +1664,14 @@
 
             activeQualityToken = c.current;
             const tokenData = queueData.find(q => q.token === activeQualityToken);
+
+            // AI Quality Check is available for Onion only
+            const cropName = ((tokenData && tokenData.crop) || c.crop || '').toLowerCase();
+            if (cropName !== 'onion') {
+                showNotification('Not Applicable', 'AI Quality Check is available for Onion only. Proceed to Weight Measurement.');
+                return;
+            }
+
             const lotWeight = tokenData ? tokenData.quantity : 100;
             const crop = tokenData ? tokenData.crop : 'Onion';
 
@@ -1013,6 +1706,7 @@
                 if (tokenData.quality.remarks) document.getElementById('qualityRemarks').value = tokenData.quality.remarks;
             }
 
+            renderQualityPaymentPanel();
             const m = new bootstrap.Modal(document.getElementById('qualityModal'));
             m.show();
         }
@@ -1129,6 +1823,7 @@
             valAlert.style.display = 'none';
             capturedPhotoDataUrl = null;
             capturedPhotoBlob = null;
+            if (!aiMediaStream) startAICamera();
         }
 
         // Fallback: Trigger File Input Upload
@@ -1218,6 +1913,325 @@
             return { valid: true };
         }
 
+        // ====== Client-side onion detection (colour + shape image analysis) ======
+        // Finds onion-coloured blobs (red / purple / yellow-brown) in the photo and classifies
+        // each one. Nothing is invented: if no onions are found, zero detections are returned.
+        function loadImageFromDataUrl(src) {
+            return new Promise((resolve, reject) => {
+                const im = new Image();
+                im.onload = () => resolve(im);
+                im.onerror = reject;
+                im.src = src;
+            });
+        }
+
+        function rgbToHsv(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+            let h = 0;
+            if (d) {
+                if (max === r) h = ((g - b) / d) % 6;
+                else if (max === g) h = (b - r) / d + 2;
+                else h = (r - g) / d + 4;
+                h *= 60;
+                if (h < 0) h += 360;
+            }
+            return { h, s: max === 0 ? 0 : d / max, v: max };
+        }
+
+        function isOnionPixel(h, s, v) {
+            if (v < 0.18) return false;
+            if (s >= 0.25 && h >= 270 && h < 335) return true;               // purple / violet skin
+            if (s >= 0.45 && v >= 0.25 && (h >= 335 || h < 8)) return true;  // red onion
+            if (s >= 0.55 && v >= 0.40 && h >= 24 && h < 48) return true;    // yellow / brown onion
+            if (s >= 0.12 && v >= 0.5 && h >= 270 && h < 345) return true;   // pale pink flesh of cut onions
+            return false;
+        }
+
+        // Pure pixel-level detector (testable without a browser). data = RGBA array.
+        function detectOnionsFromPixels(data, W, H) {
+            const N = W * H;
+            let mask = new Uint8Array(N);
+            const green = new Uint8Array(N);
+            const dark = new Uint8Array(N);
+            for (let i = 0; i < N; i++) {
+                const hsv = rgbToHsv(data[i * 4], data[i * 4 + 1], data[i * 4 + 2]);
+                if (isOnionPixel(hsv.h, hsv.s, hsv.v)) mask[i] = 1;
+                if (hsv.h >= 70 && hsv.h <= 165 && hsv.s >= 0.3 && hsv.v >= 0.25) green[i] = 1;
+                if (hsv.v < 0.22) dark[i] = 1;
+            }
+
+            // 3x3 majority smoothing
+            const smooth = new Uint8Array(N);
+            for (let y = 1; y < H - 1; y++) {
+                for (let x = 1; x < W - 1; x++) {
+                    let n = 0;
+                    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) n += mask[(y + dy) * W + (x + dx)];
+                    smooth[y * W + x] = n >= 5 ? 1 : 0;
+                }
+            }
+            mask = smooth;
+
+            // Morphology helpers (4-connected cross element)
+            const morph = (src, dilate) => {
+                const out = new Uint8Array(N);
+                for (let y = 0; y < H; y++) {
+                    for (let x = 0; x < W; x++) {
+                        const i = y * W + x;
+                        const c = [src[i], x > 0 ? src[i - 1] : (dilate ? 0 : 1), x < W - 1 ? src[i + 1] : (dilate ? 0 : 1),
+                                   y > 0 ? src[i - W] : (dilate ? 0 : 1), y < H - 1 ? src[i + W] : (dilate ? 0 : 1)];
+                        out[i] = dilate ? (c[0] | c[1] | c[2] | c[3] | c[4]) : (c[0] & c[1] & c[2] & c[3] & c[4]);
+                    }
+                }
+                return out;
+            };
+            const repeat = (src, dilate, times) => { let r = src; for (let k = 0; k < times; k++) r = morph(r, dilate); return r; };
+
+            // Close small gaps, fill holes, remove thin noise
+            let m2 = repeat(repeat(mask, true, 2), false, 2);
+            const bg = new Uint8Array(N);                      // background reachable from the border
+            const q = new Int32Array(N);
+            let qh = 0, qt = 0;
+            const pushBg = (i) => { if (!m2[i] && !bg[i]) { bg[i] = 1; q[qt++] = i; } };
+            for (let x = 0; x < W; x++) { pushBg(x); pushBg((H - 1) * W + x); }
+            for (let y = 0; y < H; y++) { pushBg(y * W); pushBg(y * W + W - 1); }
+            while (qh < qt) {
+                const p = q[qh++];
+                const px = p % W;
+                if (px > 0) pushBg(p - 1);
+                if (px < W - 1) pushBg(p + 1);
+                if (p >= W) pushBg(p - W);
+                if (p < N - W) pushBg(p + W);
+            }
+            for (let i = 0; i < N; i++) if (!m2[i] && !bg[i]) m2[i] = 1;   // holes become foreground
+            const op = repeat(repeat(m2, false, 2), true, 2);
+
+            // Connected components of the cleaned mask
+            const comp = new Int32Array(N);
+            let compCount = 0;
+            const stack = new Int32Array(N);
+            for (let s0 = 0; s0 < N; s0++) {
+                if (!op[s0] || comp[s0]) continue;
+                compCount++;
+                let sp = 0;
+                stack[sp++] = s0;
+                comp[s0] = compCount;
+                while (sp > 0) {
+                    const p = stack[--sp];
+                    const px = p % W;
+                    if (px > 0 && op[p - 1] && !comp[p - 1]) { comp[p - 1] = compCount; stack[sp++] = p - 1; }
+                    if (px < W - 1 && op[p + 1] && !comp[p + 1]) { comp[p + 1] = compCount; stack[sp++] = p + 1; }
+                    if (p >= W && op[p - W] && !comp[p - W]) { comp[p - W] = compCount; stack[sp++] = p - W; }
+                    if (p < N - W && op[p + W] && !comp[p + W]) { comp[p + W] = compCount; stack[sp++] = p + W; }
+                }
+            }
+            if (compCount === 0) return [];
+
+            // Distance transform (chamfer approximation of Euclidean distance)
+            const dist = new Float32Array(N);
+            for (let i = 0; i < N; i++) dist[i] = op[i] ? 1e6 : 0;
+            const D2 = 1.4142;
+            for (let y = 0; y < H; y++) {
+                for (let x = 0; x < W; x++) {
+                    const i = y * W + x;
+                    if (!op[i]) continue;
+                    let d = dist[i];
+                    d = Math.min(d, (x > 0 ? dist[i - 1] : 0) + 1, (y > 0 ? dist[i - W] : 0) + 1,
+                        (x > 0 && y > 0 ? dist[i - W - 1] : 0) + D2, (x < W - 1 && y > 0 ? dist[i - W + 1] : 0) + D2);
+                    dist[i] = d;
+                }
+            }
+            for (let y = H - 1; y >= 0; y--) {
+                for (let x = W - 1; x >= 0; x--) {
+                    const i = y * W + x;
+                    if (!op[i]) continue;
+                    let d = dist[i];
+                    d = Math.min(d, (x < W - 1 ? dist[i + 1] : 0) + 1, (y < H - 1 ? dist[i + W] : 0) + 1,
+                        (x < W - 1 && y < H - 1 ? dist[i + W + 1] : 0) + D2, (x > 0 && y < H - 1 ? dist[i + W - 1] : 0) + D2);
+                    dist[i] = d;
+                }
+            }
+
+            // Seeds = local maxima of the distance map (one per onion body)
+            const cands = [];
+            const R = 4;
+            for (let y = 0; y < H; y++) {
+                for (let x = 0; x < W; x++) {
+                    const i = y * W + x;
+                    const d = dist[i];
+                    if (d < 4) continue;
+                    let isMax = true;
+                    for (let dy = -R; dy <= R && isMax; dy++) {
+                        const yy = y + dy;
+                        if (yy < 0 || yy >= H) continue;
+                        for (let dx = -R; dx <= R; dx++) {
+                            const xx = x + dx;
+                            if (xx < 0 || xx >= W) continue;
+                            if (dist[yy * W + xx] > d) { isMax = false; break; }
+                        }
+                    }
+                    if (isMax) cands.push({ x, y, d });
+                }
+            }
+            cands.sort((a, b) => b.d - a.d);
+            let seeds = [];
+            for (const c of cands) {
+                let ok = true;
+                for (const s of seeds) {
+                    const dd = Math.hypot(c.x - s.x, c.y - s.y);
+                    const mx = Math.max(c.d, s.d);
+                    if ((dd < 0.9 * mx + 4 && c.d < 0.85 * s.d) || dd < 0.6 * mx) { ok = false; break; }
+                }
+                if (ok) seeds.push(c);
+            }
+
+            // Only split large components (touching onions); small ones stay one blob
+            const compMax = new Float32Array(compCount + 1);
+            for (let i = 0; i < N; i++) if (op[i] && dist[i] > compMax[comp[i]]) compMax[comp[i]] = dist[i];
+            const kept = [];
+            for (const s of seeds) {
+                const k = comp[s.y * W + s.x];
+                if (compMax[k] >= 12) {
+                    if (s.d >= 0.4 * compMax[k]) kept.push(s);
+                } else if (!kept.some(t => comp[t.y * W + t.x] === k)) {
+                    kept.push(s);
+                }
+            }
+            seeds = kept;
+            if (seeds.length === 0) return [];
+
+            // Merge seeds that belong to the same onion (very close relative to their radius)
+            const parent = seeds.map((_, i) => i);
+            const find = (i) => { while (parent[i] !== i) i = parent[i]; return i; };
+            for (let i = 0; i < seeds.length; i++) {
+                for (let j = i + 1; j < seeds.length; j++) {
+                    if (comp[seeds[i].y * W + seeds[i].x] !== comp[seeds[j].y * W + seeds[j].x]) continue;
+                    if (Math.hypot(seeds[i].x - seeds[j].x, seeds[i].y - seeds[j].y) < 0.5 * (seeds[i].d + seeds[j].d)) {
+                        parent[find(j)] = find(i);
+                    }
+                }
+            }
+            const rootToLabel = {};
+            let labelCount = 0;
+            const L = new Int32Array(N);
+            seeds.forEach((s, i) => {
+                const r = find(i);
+                if (rootToLabel[r] === undefined) rootToLabel[r] = ++labelCount;
+                L[s.y * W + s.x] = rootToLabel[r];
+            });
+
+            // Grow labels from the seeds, highest distance first (watershed-like split)
+            let pending = [];
+            for (let i = 0; i < N; i++) if (op[i] && !L[i]) pending.push(i);
+            pending.sort((a, b) => dist[b] - dist[a]);
+            for (let iter = 0; iter < 200 && pending.length; iter++) {
+                const next = [];
+                let changed = false;
+                for (const i of pending) {
+                    const x = i % W, y = (i / W) | 0;
+                    const counts = {};
+                    let best = 0, bestC = 0;
+                    for (let dy = -1; dy <= 1; dy++) {
+                        for (let dx = -1; dx <= 1; dx++) {
+                            if (!dx && !dy) continue;
+                            const xx = x + dx, yy = y + dy;
+                            if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue;
+                            const l = L[yy * W + xx];
+                            if (l) { counts[l] = (counts[l] || 0) + 1; if (counts[l] > bestC) { bestC = counts[l]; best = l; } }
+                        }
+                    }
+                    if (best) { L[i] = best; changed = true; } else next.push(i);
+                }
+                pending = next;
+                if (!changed) break;
+            }
+
+            // Collect per-onion statistics
+            const blobs = [];
+            for (let l = 1; l <= labelCount; l++) blobs.push({ l, area: 0, minX: W, maxX: 0, minY: H, maxY: 0, darkCnt: 0 });
+            for (let i = 0; i < N; i++) {
+                const l = L[i];
+                if (!l) continue;
+                const b = blobs[l - 1];
+                const x = i % W, y = (i / W) | 0;
+                b.area++;
+                if (x < b.minX) b.minX = x;
+                if (x > b.maxX) b.maxX = x;
+                if (y < b.minY) b.minY = y;
+                if (y > b.maxY) b.maxY = y;
+                b.darkCnt += dark[i];
+            }
+            const valid = blobs.filter(b => {
+                if (b.area < N * 0.004 || b.area > N * 0.7) return false;
+                b.bw = b.maxX - b.minX + 1;
+                b.bh = b.maxY - b.minY + 1;
+                b.solidity = b.area / (b.bw * b.bh);
+                const aspect = b.bw / b.bh;
+                return b.solidity >= 0.3 && aspect >= 0.35 && aspect <= 2.8;
+            });
+            if (valid.length === 0) return [];
+
+            valid.sort((a, b) => b.area - a.area);
+            const top = valid.slice(0, 30);
+            const medianArea = top.map(b => b.area).sort((a, b) => a - b)[Math.floor(top.length / 2)];
+            top.sort((a, b) => (Math.round(a.minY / (H * 0.15)) - Math.round(b.minY / (H * 0.15))) || (a.minX - b.minX));
+
+            return top.map((b, idx) => {
+                const darkRatio = b.darkCnt / b.area;
+                const ex0 = Math.max(0, Math.floor(b.minX - b.bw * 0.25)), ex1 = Math.min(W - 1, Math.ceil(b.maxX + b.bw * 0.25));
+                const ey0 = Math.max(0, Math.floor(b.minY - b.bh * 0.25)), ey1 = Math.min(H - 1, Math.ceil(b.maxY + b.bh * 0.25));
+                let greenCnt = 0;
+                for (let y = ey0; y <= ey1; y++) for (let x = ex0; x <= ex1; x++) greenCnt += green[y * W + x];
+                const greenRatio = greenCnt / b.area;
+
+                const flags = [];
+                if (darkRatio >= 0.12) flags.push('ROTTEN');
+                if (greenRatio >= 0.04) flags.push('SPROUTED');
+                if (b.solidity < 0.5) flags.push('DAMAGED');
+                if (top.length >= 3 && b.area < medianArea * 0.45) flags.push('UNDERSIZED');
+
+                const cls = flags.length ? flags[0] : 'GOOD';
+                let confidence;
+                if (cls === 'GOOD') confidence = 0.70 + 0.25 * Math.max(0, Math.min(1, (b.solidity - 0.5) / 0.3));
+                else confidence = flags.length > 1 ? 0.65 : 0.80;
+                confidence = Number(confidence.toFixed(2));
+
+                const notesMap = {
+                    ROTTEN: 'Dark / soft-rot patches detected',
+                    SPROUTED: 'Green shoot detected near bulb',
+                    DAMAGED: 'Irregular outline / cut or damaged surface',
+                    UNDERSIZED: 'Much smaller than the sample median'
+                };
+                return {
+                    id: idx + 1,
+                    class: cls,
+                    confidence,
+                    bbox: {
+                        x: Number((b.minX / W * 100).toFixed(1)),
+                        y: Number((b.minY / H * 100).toFixed(1)),
+                        width: Number((b.bw / W * 100).toFixed(1)),
+                        height: Number((b.bh / H * 100).toFixed(1))
+                    },
+                    notes: notesMap[cls] || '',
+                    needsReview: confidence < 0.70,
+                    humanVerified: false,
+                    humanVerifiedClass: null
+                };
+            });
+        }
+
+        async function detectOnionsInImage(dataUrl) {
+            const img = await loadImageFromDataUrl(dataUrl);
+            const scale = Math.min(1, 320 / Math.max(img.width, img.height));
+            const W = Math.max(1, Math.round(img.width * scale));
+            const H = Math.max(1, Math.round(img.height * scale));
+            const cv = document.createElement('canvas');
+            cv.width = W; cv.height = H;
+            const ctx = cv.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(img, 0, 0, W, H);
+            return detectOnionsFromPixels(ctx.getImageData(0, 0, W, H).data, W, H);
+        }
+
         // Step 4 & 5: Confirm image and run AI quality analysis
         async function confirmAndAnalyzeImage() {
             const sampleWeight = parseFloat(document.getElementById('aiSampleWeightInput').value);
@@ -1262,39 +2276,25 @@
                 console.warn('[AI Analysis] Backend request failed, utilizing client demo engine:', netErr);
             }
 
-            // Seamless client demo engine fallback
+            // Client-side onion detection (only real onions found in the image are reported)
             if (!analysisResult || !analysisResult.success) {
-                await new Promise(r => setTimeout(r, 800)); // processing delay
+                await new Promise(r => setTimeout(r, 400)); // short processing delay
 
-                const rawDets = [
-                    { id: 1, class: 'GOOD', confidence: 0.96, bbox: { x: 12, y: 15, width: 22, height: 24 } },
-                    { id: 2, class: 'GOOD', confidence: 0.94, bbox: { x: 38, y: 14, width: 24, height: 25 } },
-                    { id: 3, class: 'DAMAGED', confidence: 0.91, bbox: { x: 66, y: 16, width: 23, height: 23 }, notes: 'Surface cuts / skin peel' },
-                    { id: 4, class: 'GOOD', confidence: 0.95, bbox: { x: 10, y: 42, width: 23, height: 26 } },
-                    { id: 5, class: 'SPROUTED', confidence: 0.88, bbox: { x: 36, y: 40, width: 25, height: 26 }, notes: 'Apical shoot germination' },
-                    { id: 6, class: 'GOOD', confidence: 0.92, bbox: { x: 65, y: 41, width: 22, height: 25 } },
-                    { id: 7, class: 'UNDERSIZED', confidence: 0.89, bbox: { x: 14, y: 68, width: 18, height: 20 }, notes: 'Diameter < 45mm' },
-                    { id: 8, class: 'GOOD', confidence: 0.93, bbox: { x: 39, y: 69, width: 24, height: 25 } },
-                    { id: 9, class: 'ROTTEN', confidence: 0.92, bbox: { x: 67, y: 67, width: 23, height: 25 }, notes: 'Bacterial soft rot discoloration' },
-                    { id: 10, class: 'SPROUTED', confidence: 0.64, bbox: { x: 50, y: 28, width: 20, height: 22 }, notes: 'Possible early shoot - needs review' }
-                ];
-
-                const detections = rawDets.map(d => ({
-                    ...d,
-                    needsReview: d.confidence < 0.70,
-                    humanVerified: false,
-                    humanVerifiedClass: null
-                }));
+                let detections = [];
+                try {
+                    detections = await detectOnionsInImage(capturedPhotoDataUrl);
+                } catch (detErr) {
+                    console.warn('[AI Analysis] Client detection failed:', detErr);
+                }
 
                 const metrics = calculateClientQualityMetrics(detections);
                 analysisResult = {
                     success: true,
                     mode: 'demo',
-                    modeLabel: 'DEMO AI MODE',
-                    modelVersion: 'onion-yolo-v8-demo-v1.0',
+                    modeLabel: 'IMAGE ANALYSIS MODE',
+                    modelVersion: 'onion-colour-shape-v1.0',
                     imageUrl: capturedPhotoDataUrl,
                     sampleWeight,
-                    totalLotWeight: 100,
                     aiAssessment: {
                         enabled: true,
                         mode: 'demo',
@@ -1302,10 +2302,27 @@
                         detections: detections,
                         counts: metrics.counts,
                         percentages: metrics.percentages,
-                        modelVersion: 'onion-yolo-v8-demo-v1.0'
+                        modelVersion: 'onion-colour-shape-v1.0'
                     },
                     recommendedStatus: metrics.recommendedStatus
                 };
+            }
+
+            // No onions found: stop here, do not show or calculate anything
+            const foundDetections = (analysisResult.aiAssessment && analysisResult.aiAssessment.detections) || [];
+            if (foundDetections.length === 0) {
+                document.getElementById('aiProcessingBox').style.display = 'none';
+                document.getElementById('aiResultsSection').style.display = 'none';
+                currentAiDetections = [];
+                currentAiSummary = null;
+
+                // Return to the captured-image preview so the staff can retake
+                document.getElementById('cameraSection').style.display = 'block';
+                const valAlert = document.getElementById('imageValidationAlert');
+                valAlert.textContent = 'No onions detected in this image. Place the onions in a single layer on a plain background, with good lighting, and retake or upload another image.';
+                valAlert.style.display = 'block';
+                showNotification('No Onions Detected', 'Analysis stopped. Please capture a clear image of the onion sample.');
+                return;
             }
 
             // Hide processing, show result
@@ -1324,7 +2341,7 @@
                     badge.innerHTML = '<i class="bi bi-cpu-fill"></i> REAL AI MODEL';
                 } else {
                     badge.className = 'ai-mode-badge demo';
-                    badge.innerHTML = '<i class="bi bi-cpu-fill"></i> DEMO AI MODE';
+                    badge.innerHTML = '<i class="bi bi-cpu-fill"></i> IMAGE ANALYSIS MODE';
                 }
             }
 
@@ -1336,8 +2353,9 @@
             buildHumanVerificationTable(currentAiDetections);
 
             // Auto-suggest overall status
-            if (analysisResult.recommendedStatus) {
-                document.getElementById('qualityStatus').value = analysisResult.recommendedStatus;
+            {
+                document.getElementById('qualityStatus').value = 'passed';
+                renderQualityPaymentPanel();
             }
 
             showNotification('AI Analysis Completed', `Detected ${currentAiDetections.length} onions. Grade A: ${currentAiSummary.percentages.gradeA}%`);
@@ -1436,6 +2454,7 @@
             document.getElementById('summaryTotalAnalyzed').textContent = metrics.total;
             document.getElementById('summaryGradeAPercent').textContent = metrics.percentages.gradeA + '%';
             document.getElementById('summaryUrsPercent').textContent = metrics.percentages.urs + '%';
+            renderQualityPaymentPanel();
 
             if (currentAiSummary) {
                 currentAiSummary.counts = metrics.counts;
@@ -1563,9 +2582,9 @@
                            (counts.undersized * clientGradingConfig.urs.undersizedFactor);
             percentages.urs = Number(Math.min(100, Math.max(0, (ursSum / total) * 100)).toFixed(1));
 
+            // Onions were detected -> PASSED. The farmer is paid only for the detected onions,
+            // each weighted by its own quality class (see calculateQualityBasedPayment).
             let recommendedStatus = 'passed';
-            if (percentages.gradeA < 55.0 || percentages.rotten > 2.0) recommendedStatus = 'failed';
-            else if (percentages.gradeA < 75.0) recommendedStatus = 'conditionally_passed';
 
             return { total, counts, percentages, recommendedStatus };
         }
@@ -1578,6 +2597,11 @@
             const status = document.getElementById('qualityStatus').value;
             const remarks = document.getElementById('qualityRemarks').value;
             const sampleWeight = parseFloat(document.getElementById('aiSampleWeightInput').value) || 2.0;
+
+            if (!currentAiDetections || currentAiDetections.length === 0) {
+                showNotification('No Analysis', 'Capture an onion image and run the AI analysis (with at least one onion detected) before saving.');
+                return;
+            }
 
             if (!moisture || !impurities || !foreignMatter || !status) {
                 showNotification('Error', 'Please fill all traditional quality parameters');
@@ -1652,11 +2676,13 @@
                         reportId: (responseData && responseData.reportId) || `RPT-${token}-${Date.now().toString(36).toUpperCase()}`
                     }
                 };
+                // A new quality result invalidates any earlier (unpaid) payment calculation
+                if (!tokenData.paid) tokenData.paymentInfo = null;
             }
 
             // Advance pipeline tracker: AI Quality Assessment + Human Verification
             pipelineQualityResult = (status === 'failed') ? 'failed' : 'passed';
-            if (currentPipelineStageIndex >= 0 && currentPipelineStageIndex < 7) {
+            if (currentPipelineStageIndex >= 0 && currentPipelineStageIndex < 8) {
                 currentPipelineStageIndex = 6; // Human verification completed, ready for weight
                 renderPipeline();
             }
@@ -1672,7 +2698,17 @@
             // Enable Digital Quality Report button
             document.getElementById('btnOpenDigitalReport').style.display = 'inline-block';
 
-            showNotification('Quality Saved', `Token ${token}: AI quality & human verification confirmed. Grade A: ${metrics.percentages.gradeA}%, URS: ${metrics.percentages.urs}%`);
+            // Quality-based rate estimate (final amount is paid automatically once weight is saved)
+            let estimateMsg = '';
+            if (tokenData) {
+                const est = calculateQualityBasedPayment(tokenData);
+                updateFarmerPaymentView(tokenData, est, 'estimate');
+                estimateMsg = est.held
+                    ? ` Payment will be HELD (${est.reason}).`
+                    : ` Payment rate: ${formatINR(est.effectiveRate)}/kg on ${100 - est.urs}% payable weight - auto-paid after weighing.`;
+            }
+
+            showNotification('Quality Saved', `Token ${token}: Grade A: ${metrics.percentages.gradeA}%, URS: ${metrics.percentages.urs}%.${estimateMsg}`);
 
             // Hide quality modal and refresh counters
             bootstrap.Modal.getInstance(document.getElementById('qualityModal')).hide();
@@ -1691,6 +2727,10 @@
         // Used both by the post-save report and the new pre-save "Instant Report".
         function populateAndShowReport(rep) {
             currentInspectionReport = rep;
+            if (!rep.payment) {
+                const _td = queueData.find(q => q.token === rep.procurementDetails.tokenNumber);
+                rep.payment = _td ? getPaymentSnapshot(_td) : null;
+            }
 
             const statusVal = rep.verification.status || 'passed';
             document.getElementById('repOverallStatus').textContent = rep.draft ? 'INSTANT PREVIEW' : statusVal.toUpperCase();
@@ -1742,6 +2782,8 @@
             } else {
                 repImg.style.display = 'none';
             }
+
+            renderReportPayment(rep.payment);
 
             const modal = new bootstrap.Modal(document.getElementById('qualityReportModal'));
             modal.show();
@@ -1812,6 +2854,7 @@
                 }
             };
 
+            rep.payment = getLivePaymentEstimate();
             showNotification('Instant Report Ready', `Grade A: ${metrics.percentages.gradeA}%, URS: ${metrics.percentages.urs}% — preview generated.`);
             populateAndShowReport(rep);
         }
@@ -1906,6 +2949,7 @@
         document.getElementById('grossWeight').addEventListener('input', calculateNetWeight);
         document.getElementById('tareWeight').addEventListener('input', calculateNetWeight);
         document.getElementById('moistureDeduction').addEventListener('input', calculateNetWeight);
+
         function saveWeightMeasurement() {
             const net = document.getElementById('netWeight').value;
             const fw = document.getElementById('finalWeight').value;
@@ -1915,39 +2959,87 @@
             document.getElementById('weightStep').classList.remove('active-step');
             document.getElementById('amountStep').classList.add('active-step');
             document.getElementById('weightDetails').textContent = `Completed: Net ${net} kg, Final ${fw} kg after deductions`;
-            
+
             // Save final weight to token data
+            let savedTokenData = null;
             if (activeModalCounter) {
                 const c = counterData[activeModalCounter];
                 const tokenData = queueData.find(q => q.token === c.current);
                 if (tokenData) {
                     tokenData.finalWeight = parseFloat(fw);
+                    savedTokenData = tokenData;
+
+                    // Non-onion crops skip AI quality: mark the quality step as not applicable
+                    if (((tokenData.crop || '').toLowerCase()) !== 'onion' && tokenData.token === currentToken) {
+                        const farmerDetailsEl = document.getElementById('qualityDetails');
+                        if (farmerDetailsEl) farmerDetailsEl.textContent = 'Not applicable: AI quality assessment is for Onion only';
+                    }
                 }
             }
-            
-            // Advance pipeline to procurement_completed
-            if (currentPipelineStageIndex >= 0 && currentPipelineStageIndex < 7) {
-                currentPipelineStageIndex = 7; // procurement_completed
+
+            // Advance pipeline to procurement_completed (index 8)
+            if (currentPipelineStageIndex >= 0 && currentPipelineStageIndex < 8) {
+                currentPipelineStageIndex = 8; // procurement_completed
                 renderPipeline();
             }
-            
+
             showNotification('Saved', `Weight: ${fw} kg final`);
-        }
-        function processPayment() {
-            // Find the counter that triggered this modal
-            bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
-            
-            // Advance pipeline through payment stages
-            if (currentPipelineStageIndex >= 0) {
-                currentPipelineStageIndex = 8; // payment_processing
-                renderPipeline();
-                setTimeout(() => {
-                    currentPipelineStageIndex = 9; // payment_completed
-                    renderPipeline();
-                }, 1500);
+
+            // ===== AUTOMATIC QUALITY-BASED PAYMENT FOR ONION =====
+            if (savedTokenData && (savedTokenData.crop || '').toLowerCase() === 'onion' && !savedTokenData.paid) {
+                const info = calculateQualityBasedPayment(savedTokenData);
+                savedTokenData.paymentInfo = info;
+                updateFarmerPaymentView(savedTokenData, info, info.held ? 'held' : 'processing');
+
+                if (info.held) {
+                    showNotification('Payment Held', `Token ${savedTokenData.token}: ${info.reason}. No automatic payment was made.`);
+                } else {
+                    showNotification(
+                        'Calculating Payment',
+                        `Token ${savedTokenData.token}: ${info.payableWeight} kg x ${formatINR(info.effectiveRate)}/kg = ${formatINR(info.amount)}. Auto-payment starting...`
+                    );
+                    finalizePayment(savedTokenData, info, { auto: true });
+                }
+            } else if (savedTokenData && !savedTokenData.paid) {
+                // Other crops: show the MSP amount on the farmer portal (manual payment flow)
+                const info = calculateQualityBasedPayment(savedTokenData);
+                updateFarmerPaymentView(savedTokenData, info, 'amount');
             }
-            
-            showNotification('Payment', 'Payment processed successfully');
+
+            // Refresh counters so the Payment button becomes enabled
+            refreshDashboard();
+        }
+
+        // Manual payment (used for non-onion crops, or an onion payment that was held and later released by staff)
+        function processPayment() {
+            const c = activeModalCounter ? counterData[activeModalCounter] : null;
+            const tokenData = c ? queueData.find(q => q.token === c.current) : null;
+
+            if (tokenData && tokenData.paid) {
+                bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+                showNotification('Already Paid', `Token ${tokenData.token} has already been paid.`);
+                return;
+            }
+
+            const info = tokenData ? calculateQualityBasedPayment(tokenData) : null;
+            if (info && info.amount <= 0) {
+                showNotification('No Payable Amount', info.held ? info.reason : 'Final weight is missing. Complete weight measurement first.');
+                return;
+            }
+
+            bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+
+            if (tokenData && info) {
+                const methodEl = document.getElementById('paymentMethod');
+                const refEl = document.getElementById('paymentReference');
+                finalizePayment(tokenData, info, {
+                    auto: false,
+                    method: methodEl ? methodEl.value : 'bank_transfer',
+                    reference: (refEl && refEl.value.trim()) || undefined
+                });
+            } else {
+                showNotification('Payment', 'Payment processed successfully');
+            }
         }
 
         // ====== Admin ======
@@ -1956,7 +3048,7 @@
             initCharts();
         }
         function initPaymentData() {
-            const data = [
+            const baseData = [
                 { token: 'O-015', farmer: 'Arun Kumar', crop: 'Paddy', quantity: '2450', amount: '73,500', status: 'completed' },
                 { token: 'K-016', farmer: 'Bhola Prasad', crop: 'Wheat', quantity: '1920', amount: '57,600', status: 'completed' },
                 { token: 'O-017', farmer: 'Champa Devi', crop: 'Paddy', quantity: '2780', amount: '83,400', status: 'processing' },
@@ -1964,6 +3056,8 @@
                 { token: 'O-019', farmer: 'Esha Verma', crop: 'Paddy', quantity: '2340', amount: '70,200', status: 'pending' },
                 { token: 'K-020', farmer: 'Farhan Ali', crop: 'Wheat', quantity: '2100', amount: '63,000', status: 'pending' }
             ];
+            // Live payments made at the counters (auto onion payments appear first)
+            const data = paymentRecords.concat(baseData);
             const tbody = document.getElementById('paymentTableBody');
             tbody.innerHTML = '';
             data.forEach(p => {
@@ -2031,7 +3125,11 @@
                 let stateClass = 'upcoming';
                 let statusText = 'Upcoming';
                 if (idx < currentPipelineStageIndex) { stateClass = 'completed'; statusText = 'Completed'; }
-                else if (idx === currentPipelineStageIndex) { stateClass = 'current'; statusText = 'In Progress'; }
+                else if (idx === currentPipelineStageIndex) {
+                    // The final stage is "done" as soon as it is reached
+                    if (idx === pipelineStages.length - 1) { stateClass = 'completed'; statusText = 'Completed'; }
+                    else { stateClass = 'current'; statusText = 'In Progress'; }
+                }
 
                 const isLast = idx === pipelineStages.length - 1;
                 // Show Passed/Failed branch when human_verification or quality_check has been reached
@@ -2165,7 +3263,7 @@
 
             const btnChange = document.getElementById('btnChangeAadhaar');
             if (btnChange) {
-                btnChange.addEventListener('click', resetAadhaarVerification);
+                btnChange.addEventListener('click', () => resetAadhaarVerification());
             }
 
             const farmerAadhaarEl = document.getElementById('farmerAadhaar');
@@ -2217,6 +3315,24 @@
                     console.warn('[Socket.IO] Connection skipped:', sockErr);
                 }
             }
+
+            // Hindi language button (added automatically if it is not in the HTML)
+            const langToggle = document.querySelector('.lang-toggle');
+            if (langToggle && !Array.from(langToggle.querySelectorAll('.lang-btn')).some(b => (b.getAttribute('onclick') || '').includes("'hi'"))) {
+                const hiBtn = document.createElement('button');
+                hiBtn.className = 'lang-btn';
+                hiBtn.setAttribute('data-lang', 'hi');
+                hiBtn.setAttribute('onclick', "setLanguage('hi')");
+                hiBtn.textContent = 'हिन्दी';
+                langToggle.appendChild(hiBtn);
+            }
+
+            const qtyInputEl = document.getElementById('estimatedQuantity');
+            if (qtyInputEl) qtyInputEl.addEventListener('input', updateQtyHint);
+            refreshSlotUI();
+
+            const qualityStatusEl = document.getElementById('qualityStatus');
+            if (qualityStatusEl) qualityStatusEl.addEventListener('change', renderQualityPaymentPanel);
 
             AOS.init();
         }
